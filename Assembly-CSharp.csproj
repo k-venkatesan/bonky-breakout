@@ -65,6 +65,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Configuration\ConfigurationUtils.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Paddle.cs" />
+    <Compile Include="Assets\Scripts\Util\GameInitializer.cs" />
+    <Compile Include="Assets\Scripts\Util\ScreenUtils.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
