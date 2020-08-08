@@ -21,6 +21,15 @@ public static class ConfigurationUtils
         get { return 10; }
     }
 
+    /// <summary>
+    /// Gets the ball impulse force
+    /// </summary>
+    /// <value>Paddle move units per second</value>
+    public static float BallImpulseForce
+    {
+        get { return 10; }
+    }
+
     #endregion // Properties
 
     #region Methods

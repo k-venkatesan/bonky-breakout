@@ -18,7 +18,7 @@ public class GameInitializer : MonoBehaviour
 
     #region MonoBehaviour Messages
 
-    void Awake()
+    private void Awake()
     {
         ScreenUtils.Initialize();
     }
