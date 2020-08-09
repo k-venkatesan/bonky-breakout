@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Ball that rebounds off surfaces
@@ -9,9 +6,22 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     #region Fields
+
+    // Angle of impulse force (in degrees) with which ball is initialized
+    private const float ForceAngleInDegrees = -90;
+
+    // Dynamic Rigidbody 2D component
+    private Rigidbody2D rb2D;
+
     #endregion // Fields
 
     #region Components
+
+    /// <summary>
+    /// Angle of impulse force (in radians) with which ball is initialized
+    /// </summary>
+    private float ForceAngleInRadians => ForceAngleInDegrees * Mathf.Deg2Rad;
+
     #endregion // Components
 
     #region Methods
@@ -25,12 +35,29 @@ public class Ball : MonoBehaviour
         float forceMagnitude = ConfigurationUtils.BallImpulseForce;
 
         // Set force direction
-        const float ForceAngleInDegrees = 20;
-        float forceAngleInRadians = ForceAngleInDegrees * Mathf.Deg2Rad;
-        Vector2 forceDirection = new Vector2(Mathf.Cos(forceAngleInRadians), Mathf.Sin(forceAngleInRadians));
+        Vector2 forceDirection = new Vector2(Mathf.Cos(ForceAngleInRadians), Mathf.Sin(ForceAngleInRadians));
 
         // Apply impulse force
         GetComponent<Rigidbody2D>().AddForce(forceMagnitude * forceDirection, ForceMode2D.Impulse);
+    }
+
+    /// <summary>
+    /// Changes direction of motion of ball
+    /// </summary>
+    /// <param name="newDirection">New direction the ball is to move in</param>
+    public void ChangeDirection(Vector2 newDirection)
+    {
+        // Set velocity of ball based on current speed and new direction
+        float speed = rb2D.velocity.magnitude;
+        rb2D.velocity = speed * newDirection;
+    }
+
+    /// <summary>
+    /// Retrieves necessary values from and references to components
+    /// </summary>
+    private void RetrieveValuesAndReferences()
+    {
+        rb2D = GetComponent<Rigidbody2D>();
     }
 
     #endregion // Methods
@@ -39,6 +66,7 @@ public class Ball : MonoBehaviour
 
     private void Start()
     {
+        RetrieveValuesAndReferences();
         ApplyImpulseForce();
     }
 
