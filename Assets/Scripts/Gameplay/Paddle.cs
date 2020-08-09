@@ -12,11 +12,20 @@ public class Paddle : MonoBehaviour
     private Rigidbody2D rb2D;
 
     // Half-width of BoxCollider2D component
-    float colliderHalfWidth;
+    private float colliderHalfWidth;
+
+    // Maximum angle (in degrees) on either side of vertical that ball can rebound off at
+    private const float MaxReboundHalfAngleInDegrees = 60;
 
     #endregion // Fields
 
     #region Properties
+
+    /// <summary>
+    /// Maximum angle (in radians) on either side of vertical that ball can rebound off at
+    /// </summary>
+    private float MaxReboundHalfAngleInRadians => MaxReboundHalfAngleInDegrees * Mathf.Deg2Rad;
+
     #endregion // Properties
 
     #region Methods
@@ -70,6 +79,31 @@ public class Paddle : MonoBehaviour
     }
 
     /// <summary>
+    /// Checks for ball collisions with paddle and rebounds it off at an angle if so
+    /// </summary>
+    /// <param name="collision">Object containing information about collision</param>
+    private void ReboundAtAngleIfBall(Collision2D collision)
+    {
+        // Check if game object colliding with paddle is a ball
+        if (collision.gameObject.CompareTag(TagManager.Ball))
+        {
+            // Calculate offset between point of contact of ball and center of paddle as a fraction of the half-width of the paddle
+            float offsetBetweenContactAndPaddleCenter = collision.gameObject.transform.position.x - transform.position.x;
+            float normalizedOffsetOnPaddle = offsetBetweenContactAndPaddleCenter / colliderHalfWidth;
+
+            // Calculate rebound angle in proportion to normalized offset
+            float reboundAngleFromVerticalInRadians = normalizedOffsetOnPaddle * MaxReboundHalfAngleInRadians;
+
+            // Calculate rebound direction
+            float reboundAngleFromHorizontalInRadians = Mathf.PI / 2 - reboundAngleFromVerticalInRadians;
+            Vector2 reboundDirection = new Vector2(Mathf.Cos(reboundAngleFromHorizontalInRadians), Mathf.Sin(reboundAngleFromHorizontalInRadians));
+
+            // Change direction of ball to rebound direction
+            collision.gameObject.GetComponent<Ball>().ChangeDirection(reboundDirection);
+        }
+    }
+
+    /// <summary>
     /// Retrieves necessary values from and references to components
     /// </summary>
     private void RetrieveValuesAndReferences()
@@ -90,6 +124,11 @@ public class Paddle : MonoBehaviour
     private void FixedUpdate()
     {
         ProcessMotionInput();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        ReboundAtAngleIfBall(collision);
     }
 
     #endregion // MonoBehaviour Messages
