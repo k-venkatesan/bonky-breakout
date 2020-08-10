@@ -82,7 +82,7 @@ public class Paddle : MonoBehaviour
     /// Checks for ball collisions with paddle and rebounds it off at an angle if so
     /// </summary>
     /// <param name="collision">Object containing information about collision</param>
-    private void ReboundAtAngleIfBall(Collision2D collision)
+    private void ProcessCollision(Collision2D collision)
     {
         // Check if game object colliding with paddle is a ball
         if (collision.gameObject.CompareTag(TagManager.Ball))
@@ -128,7 +128,7 @@ public class Paddle : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        ReboundAtAngleIfBall(collision);
+        ProcessCollision(collision);
     }
 
     #endregion // MonoBehaviour Messages
