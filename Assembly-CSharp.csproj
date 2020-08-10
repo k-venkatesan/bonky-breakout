@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Configuration\ConfigurationUtils.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Ball.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Block.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Paddle.cs" />
     <Compile Include="Assets\Scripts\Util\GameInitializer.cs" />
     <Compile Include="Assets\Scripts\Util\ScreenUtils.cs" />
