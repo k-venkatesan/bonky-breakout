@@ -19,6 +19,7 @@ public class GameInitializer : MonoBehaviour
     private void Awake()
     {
         ScreenUtils.Initialize();
+        ConfigurationUtils.Initialize();
     }
 
     #endregion // MonoBehaviour Messages
