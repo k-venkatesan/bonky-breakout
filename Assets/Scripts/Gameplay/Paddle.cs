@@ -84,23 +84,37 @@ public class Paddle : MonoBehaviour
     /// <param name="collision">Object containing information about collision</param>
     private void ProcessCollision(Collision2D collision)
     {
-        // Check if game object colliding with paddle is a ball
-        if (collision.gameObject.CompareTag(TagManager.Ball))
+        // Continue processing collision only if game object colliding with paddle is a ball
+        if (!collision.gameObject.CompareTag(TagManager.Ball))
         {
-            // Calculate offset between point of contact of ball and center of paddle as a fraction of the half-width of the paddle
-            float offsetBetweenContactAndPaddleCenter = collision.gameObject.transform.position.x - transform.position.x;
-            float normalizedOffsetOnPaddle = offsetBetweenContactAndPaddleCenter / colliderHalfWidth;
-
-            // Calculate rebound angle in proportion to normalized offset
-            float reboundAngleFromVerticalInRadians = normalizedOffsetOnPaddle * MaxReboundHalfAngleInRadians;
-
-            // Calculate rebound direction
-            float reboundAngleFromHorizontalInRadians = Mathf.PI / 2 - reboundAngleFromVerticalInRadians;
-            Vector2 reboundDirection = new Vector2(Mathf.Cos(reboundAngleFromHorizontalInRadians), Mathf.Sin(reboundAngleFromHorizontalInRadians));
-
-            // Change direction of ball to rebound direction
-            collision.gameObject.GetComponent<Ball>().ChangeDirection(reboundDirection);
+            return;
         }
+
+        // Get X coordinate values of geometric centers of paddle and ball
+        float paddleCenterX = transform.position.x;
+        float ballCenterX = collision.gameObject.transform.position.x;
+
+        // Continue processing collision only if impact is within top surface of paddle (as opposed to edges or sides)
+        if (ballCenterX < paddleCenterX - colliderHalfWidth
+            || ballCenterX > paddleCenterX + colliderHalfWidth)
+        {
+            return;
+        }
+
+        // Calculate offset between ball and paddle centers as a fraction of the half-width of the paddle
+        float offsetBetweenContactAndPaddleCenter = ballCenterX - paddleCenterX;
+        float normalizedOffsetOnPaddle = offsetBetweenContactAndPaddleCenter / colliderHalfWidth;
+
+        // Calculate rebound angle in proportion to normalized offset
+        float reboundAngleFromVerticalInRadians = normalizedOffsetOnPaddle * MaxReboundHalfAngleInRadians;
+
+        // Calculate rebound direction
+        float reboundAngleFromHorizontalInRadians = Mathf.PI / 2 - reboundAngleFromVerticalInRadians;
+        Vector2 reboundDirection = new Vector2(Mathf.Cos(reboundAngleFromHorizontalInRadians), Mathf.Sin(reboundAngleFromHorizontalInRadians));
+
+        // Change direction of ball to rebound direction
+        collision.gameObject.GetComponent<Ball>().ChangeDirection(reboundDirection);
+        
     }
 
     /// <summary>
