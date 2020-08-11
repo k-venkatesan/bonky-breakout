@@ -4,7 +4,11 @@
 public static class ConfigurationUtils
 {
     #region Fields
-    #endregion / /Fields
+
+    // Object that reads configuration data
+    private static ConfigurationData configurationData;
+
+    #endregion // Fields
 
     #region Properties
 
@@ -14,7 +18,7 @@ public static class ConfigurationUtils
     /// <value>Paddle move units per second</value>
     public static float PaddleMoveUnitsPerSecond
     {
-        get { return 10; }
+        get { return configurationData.PaddleMoveUnitsPerSecond; }
     }
 
     /// <summary>
@@ -23,7 +27,7 @@ public static class ConfigurationUtils
     /// <value>Paddle move units per second</value>
     public static float BallImpulseForce
     {
-        get { return 10; }
+        get { return configurationData.BallImpulseForce; }
     }
 
     #endregion // Properties
@@ -35,7 +39,7 @@ public static class ConfigurationUtils
     /// </summary>
     public static void Initialize()
     {
-
+        configurationData = new ConfigurationData();
     }
 
     #endregion // Methods
