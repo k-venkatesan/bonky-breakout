@@ -1,2 +1,2 @@
-10, 10
-Paddle move units per second, ball impulse force
+10, 10, 10
+paddle move units per second, ball impulse force, ball lifetime (seconds)

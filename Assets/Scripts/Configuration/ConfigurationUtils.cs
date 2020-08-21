@@ -16,19 +16,19 @@ public static class ConfigurationUtils
     /// Gets the paddle move units per second
     /// </summary>
     /// <value>Paddle move units per second</value>
-    public static float PaddleMoveUnitsPerSecond
-    {
-        get { return configurationData.PaddleMoveUnitsPerSecond; }
-    }
+    public static float PaddleMoveUnitsPerSecond => configurationData.PaddleMoveUnitsPerSecond;
 
     /// <summary>
     /// Gets the ball impulse force
     /// </summary>
     /// <value>Paddle move units per second</value>
-    public static float BallImpulseForce
-    {
-        get { return configurationData.BallImpulseForce; }
-    }
+    public static float BallImpulseForce => configurationData.BallImpulseForce;
+
+    /// <summary>
+    /// Gets the total lifetime of balls (in seconds)
+    /// </summary>
+    /// <value>Paddle move units per second</value>
+    public static float BallLifetimeInSeconds => configurationData.BallLifetimeInSeconds;
 
     #endregion // Properties
 

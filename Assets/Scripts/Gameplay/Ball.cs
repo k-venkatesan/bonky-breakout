@@ -13,6 +13,9 @@ public class Ball : MonoBehaviour
     // Dynamic Rigidbody 2D component
     private Rigidbody2D rb2D;
 
+    // Timer used to track eclipsed lifetime
+    Timer timer;
+
     #endregion // Fields
 
     #region Components
@@ -53,11 +56,33 @@ public class Ball : MonoBehaviour
     }
 
     /// <summary>
+    /// Checks if the eclipsed lifetime has surpassed the total lifetime.
+    /// Destroys the ball if so.
+    /// </summary>
+    private void MonitorTimer()
+    {
+        if (timer.Finished)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    /// <summary>
     /// Retrieves necessary values from and references to components
     /// </summary>
     private void RetrieveValuesAndReferences()
     {
         rb2D = GetComponent<Rigidbody2D>();
+        timer = GetComponent<Timer>();
+    }
+
+    /// <summary>
+    /// Starts timer to begin tracking the eclipsed lifetime of the ball
+    /// </summary>
+    private void StartTimer()
+    {
+        timer.Duration = ConfigurationUtils.BallLifetimeInSeconds;
+        timer.Run();
     }
 
     #endregion // Methods
@@ -68,6 +93,12 @@ public class Ball : MonoBehaviour
     {
         RetrieveValuesAndReferences();
         ApplyImpulseForce();
+        StartTimer();
+    }
+
+    private void Update()
+    {
+        MonitorTimer();
     }
 
     #endregion // MonoBehaviour Messages

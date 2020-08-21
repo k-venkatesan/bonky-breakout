@@ -13,6 +13,7 @@ public class ConfigurationData
     // Configuration data with default values
     private static float paddleMoveUnitsPerSecond = 10;
     private static float ballImpulseForce = 10;
+    private static float ballLifetimeInSeconds = 10;
 
     #endregion
 
@@ -22,19 +23,19 @@ public class ConfigurationData
     /// Gets the paddle move units per second
     /// </summary>
     /// <value>Paddle move units per second</value>
-    public float PaddleMoveUnitsPerSecond
-    {
-        get { return paddleMoveUnitsPerSecond; }
-    }
+    public float PaddleMoveUnitsPerSecond => paddleMoveUnitsPerSecond;
 
     /// <summary>
-    /// Gets the impulse force to apply to move the ball
+    /// Gets the impulse force to apply to move balls
     /// </summary>
-    /// <value>impulse force</value>
-    public float BallImpulseForce
-    {
-        get { return ballImpulseForce; }    
-    }
+    /// <value>Impulse force</value>
+    public float BallImpulseForce => ballImpulseForce;
+
+    /// <summary>
+    /// Gets the total lifetime of balls (in seconds)
+    /// </summary>
+    /// <value>Ball lifetime in seconds</value>
+    public float BallLifetimeInSeconds => ballLifetimeInSeconds;
 
     #endregion
 
@@ -89,6 +90,7 @@ public class ConfigurationData
         // Set fields using array of configuration values
         paddleMoveUnitsPerSecond = float.Parse(configurationValues[0]);
         ballImpulseForce = float.Parse(configurationValues[1]);
+        ballLifetimeInSeconds = float.Parse(configurationValues[2]);
     }
 
     #endregion // Methods
