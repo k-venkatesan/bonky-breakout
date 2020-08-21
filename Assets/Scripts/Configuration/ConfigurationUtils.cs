@@ -21,14 +21,20 @@ public static class ConfigurationUtils
     /// <summary>
     /// Gets the ball impulse force
     /// </summary>
-    /// <value>Paddle move units per second</value>
+    /// <value>Impulse force</value>
     public static float BallImpulseForce => configurationData.BallImpulseForce;
 
     /// <summary>
     /// Gets the total lifetime of balls (in seconds)
     /// </summary>
-    /// <value>Paddle move units per second</value>
+    /// <value>Ball lifetime in seconds</value>
     public static float BallLifetimeInSeconds => configurationData.BallLifetimeInSeconds;
+
+    /// <summary>
+    /// Gets the total lifetime (in seconds) of balls
+    /// </summary>
+    /// <value>Wait duration before ball spawn (in seconds)</value>
+    public static float BallSpawnWaitDurationInSeconds => configurationData.BallSpawnWaitDurationInSeconds;
 
     #endregion // Properties
 

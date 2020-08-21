@@ -14,6 +14,7 @@ public class ConfigurationData
     private static float paddleMoveUnitsPerSecond = 10;
     private static float ballImpulseForce = 10;
     private static float ballLifetimeInSeconds = 10;
+    private static float ballSpawnWaitDurationInSeconds = 1;
 
     #endregion
 
@@ -32,10 +33,17 @@ public class ConfigurationData
     public float BallImpulseForce => ballImpulseForce;
 
     /// <summary>
-    /// Gets the total lifetime of balls (in seconds)
+    /// Gets the total lifetime (in seconds) of balls
     /// </summary>
     /// <value>Ball lifetime in seconds</value>
     public float BallLifetimeInSeconds => ballLifetimeInSeconds;
+
+    /// <summary>
+    /// Gets the duration (in seconds) to wait between a ball being destroyed
+    /// and a new one being spawned
+    /// </summary>
+    /// <value>Wait duration before ball spawn (in seconds)</value>
+    public float BallSpawnWaitDurationInSeconds => ballSpawnWaitDurationInSeconds;
 
     #endregion
 
