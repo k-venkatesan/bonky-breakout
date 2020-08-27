@@ -66,9 +66,12 @@
     <Compile Include="Assets\Scripts\Configuration\ConfigurationData.cs" />
     <Compile Include="Assets\Scripts\Configuration\ConfigurationUtils.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Ball.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\BallSpawner.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Block.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Paddle.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Timer.cs" />
     <Compile Include="Assets\Scripts\Util\GameInitializer.cs" />
+    <Compile Include="Assets\Scripts\Util\RandomNumberGenerator.cs" />
     <Compile Include="Assets\Scripts\Util\ScreenUtils.cs" />
     <Compile Include="Assets\Scripts\Util\TagManager.cs" />
     <Reference Include="UnityEngine">

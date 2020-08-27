@@ -13,6 +13,10 @@ public class ConfigurationData
     // Configuration data with default values
     private static float paddleMoveUnitsPerSecond = 10;
     private static float ballImpulseForce = 10;
+    private static float ballLifetimeInSeconds = 10;
+    private static float ballSpawnWaitDurationInSeconds = 1;
+    private static int randomBallSpawnMinDurationInSeconds = 5;
+    private static int randomBallSpawnMaxDurationInSeconds = 10;
 
     #endregion
 
@@ -22,19 +26,38 @@ public class ConfigurationData
     /// Gets the paddle move units per second
     /// </summary>
     /// <value>Paddle move units per second</value>
-    public float PaddleMoveUnitsPerSecond
-    {
-        get { return paddleMoveUnitsPerSecond; }
-    }
+    public float PaddleMoveUnitsPerSecond => paddleMoveUnitsPerSecond;
 
     /// <summary>
-    /// Gets the impulse force to apply to move the ball
+    /// Gets the impulse force to apply to move balls
     /// </summary>
-    /// <value>impulse force</value>
-    public float BallImpulseForce
-    {
-        get { return ballImpulseForce; }    
-    }
+    /// <value>Impulse force</value>
+    public float BallImpulseForce => ballImpulseForce;
+
+    /// <summary>
+    /// Gets the total lifetime (in seconds) of balls
+    /// </summary>
+    /// <value>Ball lifetime in seconds</value>
+    public float BallLifetimeInSeconds => ballLifetimeInSeconds;
+
+    /// <summary>
+    /// Gets the duration (in seconds) to wait between a ball being destroyed
+    /// and a new one being spawned
+    /// </summary>
+    /// <value>Wait duration before ball spawn (in seconds)</value>
+    public float BallSpawnWaitDurationInSeconds => ballSpawnWaitDurationInSeconds;
+
+    /// <summary>
+    /// Gets the minimum duration (in seconds) between random ball spawns
+    /// </summary>
+    /// <value>Minimum duration between random ball spawns (in seconds)</value>
+    public int RandomBallSpawnMinDurationInSeconds => randomBallSpawnMinDurationInSeconds;
+
+    /// <summary>
+    /// Gets the maximum duration (in seconds) between random ball spawns
+    /// </summary>
+    /// <value>Maximum duration between random ball spawns (in seconds)</value>
+    public int RandomBallSpawnMaxDurationInSeconds => randomBallSpawnMaxDurationInSeconds;
 
     #endregion
 
@@ -89,6 +112,9 @@ public class ConfigurationData
         // Set fields using array of configuration values
         paddleMoveUnitsPerSecond = float.Parse(configurationValues[0]);
         ballImpulseForce = float.Parse(configurationValues[1]);
+        ballLifetimeInSeconds = float.Parse(configurationValues[2]);
+        randomBallSpawnMinDurationInSeconds = int.Parse(configurationValues[3]);
+        randomBallSpawnMaxDurationInSeconds = int.Parse(configurationValues[4]);
     }
 
     #endregion // Methods
