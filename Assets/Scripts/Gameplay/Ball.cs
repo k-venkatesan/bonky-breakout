@@ -56,6 +56,19 @@ public class Ball : MonoBehaviour
     }
 
     /// <summary>
+    /// Checks if reason for ball disappearance is because it has fallen below bottom edge of screen.
+    /// Destroys the ball and spawns a new one if so.
+    /// </summary>
+    private void ProcessDisappearance()
+    {
+        if (transform.position.y < ScreenUtils.ScreenBottom)
+        {
+            Camera.main.GetComponent<BallSpawner>().RequestNewBall();
+            Destroy(gameObject);
+        }
+    }
+
+    /// <summary>
     /// Retrieves necessary values from and references to components
     /// </summary>
     private void RetrieveValuesAndReferences()
@@ -100,6 +113,11 @@ public class Ball : MonoBehaviour
     private void Update()
     {
         UpdateLifeStatus();
+    }
+
+    private void OnBecameInvisible()
+    {
+        ProcessDisappearance();
     }
 
     #endregion // MonoBehaviour Messages
