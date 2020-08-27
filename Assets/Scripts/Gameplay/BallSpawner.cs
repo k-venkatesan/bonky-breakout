@@ -11,6 +11,9 @@ public class BallSpawner : MonoBehaviour
     // Timer that allows for a pause before spawning ball
     private Timer waitTimer;
 
+    // Timer that allows for spawning balls at random intervals (within configured range)
+    private Timer randomSpawnTimer;
+
     // Flag that instructs whether to spawn ball or not
     private bool isBallToBeSpawned = false;
 
@@ -22,12 +25,34 @@ public class BallSpawner : MonoBehaviour
     #region Methods
 
     /// <summary>
-    /// Initializes ball spawn timer with duration provided in configuration file
+    /// Initializes timers that control spawning of balls
     /// </summary>
-    private void InitializeTimer()
+    private void InitializeTimers()
     {
+        // Initialize wait timer
         waitTimer = gameObject.AddComponent<Timer>();
         waitTimer.Duration = ConfigurationUtils.BallSpawnWaitDurationInSeconds;
+
+        // Initialize random spawn timer
+        randomSpawnTimer = gameObject.AddComponent<Timer>();
+        randomSpawnTimer.Duration = RandomNumberGenerator.RandomNumberInRange(ConfigurationUtils.RandomBallSpawnMinDurationInSeconds, ConfigurationUtils.RandomBallSpawnMaxDurationInSeconds);
+        randomSpawnTimer.Run();
+    }
+
+    /// <summary>
+    /// Monitors timer that controls random spawning of balls
+    /// </summary>
+    private void MonitorRandomSpawnTimer()
+    {
+        if (randomSpawnTimer.Finished)
+        {
+            // Spawn ball
+            Instantiate(prefabBall);
+
+            // Reset timer
+            randomSpawnTimer.Duration = RandomNumberGenerator.RandomNumberInRange(ConfigurationUtils.RandomBallSpawnMinDurationInSeconds, ConfigurationUtils.RandomBallSpawnMaxDurationInSeconds);
+            randomSpawnTimer.Run();
+        }
     }
 
     /// <summary>
@@ -58,11 +83,12 @@ public class BallSpawner : MonoBehaviour
 
     private void Start()
     {
-        InitializeTimer();
+        InitializeTimers();
     }
 
     private void Update()
     {
+        MonitorRandomSpawnTimer();
         ProcessSpawnFlag();
     }
 

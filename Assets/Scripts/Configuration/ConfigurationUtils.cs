@@ -36,6 +36,18 @@ public static class ConfigurationUtils
     /// <value>Wait duration before ball spawn (in seconds)</value>
     public static float BallSpawnWaitDurationInSeconds => configurationData.BallSpawnWaitDurationInSeconds;
 
+    /// <summary>
+    /// Gets the minimum duration (in seconds) between random ball spawns
+    /// </summary>
+    /// <value>Minimum duration between random ball spawns (in seconds)</value>
+    public static int RandomBallSpawnMinDurationInSeconds => configurationData.RandomBallSpawnMinDurationInSeconds;
+
+    /// <summary>
+    /// Gets the maximum duration (in seconds) between random ball spawns
+    /// </summary>
+    /// <value>Maximum duration between random ball spawns (in seconds)</value>
+    public static int RandomBallSpawnMaxDurationInSeconds => configurationData.RandomBallSpawnMaxDurationInSeconds;
+
     #endregion // Properties
 
     #region Methods

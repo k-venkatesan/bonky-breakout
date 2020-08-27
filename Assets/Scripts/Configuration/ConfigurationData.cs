@@ -15,6 +15,8 @@ public class ConfigurationData
     private static float ballImpulseForce = 10;
     private static float ballLifetimeInSeconds = 10;
     private static float ballSpawnWaitDurationInSeconds = 1;
+    private static int randomBallSpawnMinDurationInSeconds = 5;
+    private static int randomBallSpawnMaxDurationInSeconds = 10;
 
     #endregion
 
@@ -44,6 +46,18 @@ public class ConfigurationData
     /// </summary>
     /// <value>Wait duration before ball spawn (in seconds)</value>
     public float BallSpawnWaitDurationInSeconds => ballSpawnWaitDurationInSeconds;
+
+    /// <summary>
+    /// Gets the minimum duration (in seconds) between random ball spawns
+    /// </summary>
+    /// <value>Minimum duration between random ball spawns (in seconds)</value>
+    public int RandomBallSpawnMinDurationInSeconds => randomBallSpawnMinDurationInSeconds;
+
+    /// <summary>
+    /// Gets the maximum duration (in seconds) between random ball spawns
+    /// </summary>
+    /// <value>Maximum duration between random ball spawns (in seconds)</value>
+    public int RandomBallSpawnMaxDurationInSeconds => randomBallSpawnMaxDurationInSeconds;
 
     #endregion
 
@@ -99,6 +113,8 @@ public class ConfigurationData
         paddleMoveUnitsPerSecond = float.Parse(configurationValues[0]);
         ballImpulseForce = float.Parse(configurationValues[1]);
         ballLifetimeInSeconds = float.Parse(configurationValues[2]);
+        randomBallSpawnMinDurationInSeconds = int.Parse(configurationValues[3]);
+        randomBallSpawnMaxDurationInSeconds = int.Parse(configurationValues[4]);
     }
 
     #endregion // Methods

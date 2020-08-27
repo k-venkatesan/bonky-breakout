@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\Gameplay\Paddle.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Timer.cs" />
     <Compile Include="Assets\Scripts\Util\GameInitializer.cs" />
+    <Compile Include="Assets\Scripts\Util\RandomNumberGenerator.cs" />
     <Compile Include="Assets\Scripts\Util\ScreenUtils.cs" />
     <Compile Include="Assets\Scripts\Util\TagManager.cs" />
     <Reference Include="UnityEngine">
