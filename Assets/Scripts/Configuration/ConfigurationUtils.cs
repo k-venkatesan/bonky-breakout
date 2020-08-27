@@ -48,6 +48,12 @@ public static class ConfigurationUtils
     /// <value>Maximum duration between random ball spawns (in seconds)</value>
     public static int RandomBallSpawnMaxDurationInSeconds => configurationData.RandomBallSpawnMaxDurationInSeconds;
 
+    /// <summary>
+    /// Gets the number of points a standard block is worth
+    /// </summary>
+    /// <value>Number of points a standard block is worth</value>
+    public static int StandardBlockValue => configurationData.StandardBlockValue;
+
     #endregion // Properties
 
     #region Methods

@@ -7,6 +7,10 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
     #region Fields
+
+    // Points added to score when block is broken
+    protected int pointsWorth;
+
     #endregion // Fields
 
     #region Components
@@ -23,6 +27,8 @@ public class Block : MonoBehaviour
         // Check if impacting object is ball
         if (collision.gameObject.CompareTag(TagManager.Ball))
         {
+            // Add points before destroying block
+            HUD.IncreaseScore(pointsWorth);
             Destroy(gameObject);
         }
     }

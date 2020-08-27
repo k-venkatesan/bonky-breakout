@@ -17,6 +17,7 @@ public class ConfigurationData
     private static float ballSpawnWaitDurationInSeconds = 1;
     private static int randomBallSpawnMinDurationInSeconds = 5;
     private static int randomBallSpawnMaxDurationInSeconds = 10;
+    private static int standardBlockValue = 1;
 
     #endregion
 
@@ -58,6 +59,12 @@ public class ConfigurationData
     /// </summary>
     /// <value>Maximum duration between random ball spawns (in seconds)</value>
     public int RandomBallSpawnMaxDurationInSeconds => randomBallSpawnMaxDurationInSeconds;
+
+    /// <summary>
+    /// Gets the number of points a standard block is worth
+    /// </summary>
+    /// <value>Number of points a standard block is worth</value>
+    public int StandardBlockValue => standardBlockValue;
 
     #endregion
 
@@ -113,8 +120,10 @@ public class ConfigurationData
         paddleMoveUnitsPerSecond = float.Parse(configurationValues[0]);
         ballImpulseForce = float.Parse(configurationValues[1]);
         ballLifetimeInSeconds = float.Parse(configurationValues[2]);
-        randomBallSpawnMinDurationInSeconds = int.Parse(configurationValues[3]);
-        randomBallSpawnMaxDurationInSeconds = int.Parse(configurationValues[4]);
+        ballSpawnWaitDurationInSeconds = float.Parse(configurationValues[3]);
+        randomBallSpawnMinDurationInSeconds = int.Parse(configurationValues[4]);
+        randomBallSpawnMaxDurationInSeconds = int.Parse(configurationValues[5]);
+        standardBlockValue = int.Parse(configurationValues[6]);
     }
 
     #endregion // Methods
