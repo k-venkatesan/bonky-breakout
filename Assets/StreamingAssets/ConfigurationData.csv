@@ -1,7 +1,8 @@
-10, 10, 10, 1, 5, 10
+10, 10, 10, 1, 5, 10, 1
 paddle move units per second, 
 ball impulse force, 
 ball lifetime (seconds),
 ball spawn wait duration (seconds)
 random ball spawn min duration (seconds)
 random ball spawn max duration (seconds)
+standard block value
