@@ -55,9 +55,25 @@ public class PickupBlock : Block
         pointsWorth = ConfigurationUtils.PickupBlockValue;
     }
 
+    /// <summary>
+    /// Verifies that serialized fields are filled and logs warnings where they are not
+    /// </summary>
+    private void VerifySerializedFields()
+    {
+        if (freezerSprite == null || speedupSprite == null)
+        {
+            Debug.LogWarning("One or both sprites are missing. Please populate fields in Inspector window.");
+        }
+    }
+
     #endregion // Methods
 
     #region MonoBehaviour Messages
+
+    private void Awake()
+    {
+        VerifySerializedFields();
+    }
 
     private void Start()
     {

@@ -86,6 +86,11 @@ public static class ConfigurationUtils
     /// <value>Percentage of speedup pickup blocks in the game</value>
     public static int SpeedupBlockPercentage => configurationData.SpeedupBlockPercentage;
 
+    /// Gets the total number balls provided per game
+    /// </summary>
+    /// <value>Total number balls provided per game</value>
+    public static int TotalBallsPerGame => configurationData.TotalBallsPerGame;
+
     #endregion // Properties
 
     #region Methods

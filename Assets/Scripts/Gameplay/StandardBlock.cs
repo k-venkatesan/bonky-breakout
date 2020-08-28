@@ -34,9 +34,25 @@ public class StandardBlock : Block
         pointsWorth = ConfigurationUtils.StandardBlockValue;
     }
 
+    /// <summary>
+    /// Verifies that serialized fields are filled and logs warnings where they are not
+    /// </summary>
+    private void VerifySerializedFields()
+    {
+        if (sprites == null)
+        {
+            Debug.LogWarning("Standard block sprites were not found. Please populate fields in Inspector window.");
+        }
+    }
+
     #endregion // Methods
 
     #region MonoBehaviour Messages
+
+    private void Awake()
+    {
+        VerifySerializedFields();
+    }
 
     private void Start()
     {

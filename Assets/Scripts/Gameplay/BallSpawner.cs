@@ -65,7 +65,7 @@ public class BallSpawner : MonoBehaviour
             && Physics2D.OverlapArea(ballSpawnLocationBottomLeftCorner, ballSpawnLocationTopRightCorner) == null)
         {
             // Spawn ball
-            Instantiate(prefabBall);
+            SpawnNewBall();
 
             // Reset timer
             randomSpawnTimer.Duration = RandomNumberGenerator.RandomNumberInRange(ConfigurationUtils.RandomBallSpawnMinDurationInSeconds, ConfigurationUtils.RandomBallSpawnMaxDurationInSeconds);
@@ -83,7 +83,7 @@ public class BallSpawner : MonoBehaviour
             && waitTimer.Finished 
             && Physics2D.OverlapArea(ballSpawnLocationBottomLeftCorner, ballSpawnLocationTopRightCorner) == null)
         {
-            Instantiate(prefabBall);
+            SpawnNewBall();
             isBallToBeSpawned = false;
         }
     }
@@ -95,6 +95,15 @@ public class BallSpawner : MonoBehaviour
     {
         isBallToBeSpawned = true;
         waitTimer.Run();
+    }
+
+    /// <summary>
+    /// Spawns a new ball and updates count of balls left
+    /// </summary>
+    private void SpawnNewBall()
+    {
+        Instantiate(prefabBall);
+        HUD.DecreaseBallsLeftByOne();
     }
 
     /// <summary>

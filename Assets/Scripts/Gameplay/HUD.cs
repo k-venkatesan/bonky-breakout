@@ -6,8 +6,8 @@ public class HUD : MonoBehaviour
     #region Fields
 
     // Parameters to be displayed in HUD
-    private static int score = 0;
-    private static int ballsLeft = 0;
+    private static int score;
+    private static int ballsLeft;
 
     // Text objects that display required parameters
     private static Text scoreText;
@@ -38,6 +38,15 @@ public class HUD : MonoBehaviour
     #region Methods
 
     /// <summary>
+    /// Decreases number of balls left and updates display
+    /// </summary>
+    public static void DecreaseBallsLeftByOne()
+    {
+        ballsLeft -= 1;
+        ballsLeftText.text = BallsLeftTextContents;
+    }
+
+    /// <summary>
     /// Increases score by given points and updates display
     /// </summary>
     /// <param name="pointsToIncreaseScoreBy">Points to increase total score by</param>
@@ -48,15 +57,17 @@ public class HUD : MonoBehaviour
     }
 
     /// <summary>
-    /// Initializes text on HUD
+    /// Initializes parameters and correspondings texts on HUD
     /// </summary>
-    private void InitializeText()
+    private void InitializeTexts()
     {
-        // Initialize text displaying score
+        // Initialize score and corresponding display text
+        score = 0;
         scoreText = GameObject.FindWithTag(TagManager.ScoreDisplay).GetComponent<Text>();
         scoreText.text = ScoreTextContents;
 
-        // Initialize text displaying balls left
+        // Initialize balls left and corresponding display text
+        ballsLeft = ConfigurationUtils.TotalBallsPerGame;
         ballsLeftText = GameObject.FindWithTag(TagManager.BallsLeftDisplay).GetComponent<Text>();
         ballsLeftText.text = BallsLeftTextContents;
     }
@@ -67,7 +78,7 @@ public class HUD : MonoBehaviour
 
     private void Start()
     {
-        InitializeText();
+        InitializeTexts();
     }
 
     #endregion MonoBehaviour Messages
