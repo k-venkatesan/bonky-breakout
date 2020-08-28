@@ -26,7 +26,54 @@ public class LevelBuilder : MonoBehaviour
     #endregion // Fields
 
     #region Components
-    #endregion // Componenets
+
+    /// <summary>
+    /// Gets prefab of random block based on percentage distribution
+    /// </summary>
+    private Block RandomBlockPrefab
+    {
+        get
+        {
+            // Block prefab to be returned
+            Block prefabBlock;
+
+            /* If percentage distributions are 60, 20, 10 and 10 for example, then block
+             * type is assigned based on random number selection as below:
+             * * Standard block if less than or equal to 60
+             * * Bonus block if between 61 and 80 (both inclusive)
+             * * Freezer block if between 81 and 90 (both inclusive)
+             * * Speedup block if between 91 and 100 (both inclusive) */
+            int randomSelection = RandomNumberGenerator.RandomNumberInRange(1, 100);
+            int randomNumberUpperLimitForBlock = 0;
+            if (randomSelection <= (randomNumberUpperLimitForBlock += ConfigurationUtils.StandardBlockPercentage)) 
+            {
+                prefabBlock = prefabStandardBlock;
+            }
+            else if (randomSelection <= (randomNumberUpperLimitForBlock += ConfigurationUtils.BonusBlockPercentage))
+            {
+                prefabBlock = prefabBonusBlock;
+            }
+            else if (randomSelection <= (randomNumberUpperLimitForBlock += ConfigurationUtils.FreezerBlockPercentage))
+            {
+                prefabBlock = prefabPickupBlock;
+                (prefabBlock as PickupBlock).PickupEffect = PickupEffect.Freezer;
+            }
+            else if (randomSelection <= (randomNumberUpperLimitForBlock += ConfigurationUtils.SpeedupBlockPercentage))
+            {
+                prefabBlock = prefabPickupBlock;
+                (prefabBlock as PickupBlock).PickupEffect = PickupEffect.Speedup;
+            }
+            else
+            {
+                Debug.LogWarning("Error in percentage distribution of blocks.");
+                prefabBlock = prefabStandardBlock;
+            }
+
+            return prefabBlock;
+        }
+    }
+
+    #endregion // Components
 
     #region Methods
 
@@ -39,9 +86,9 @@ public class LevelBuilder : MonoBehaviour
     }
 
     /// <summary>
-    /// Builds rows of blocks
+    /// Builds grid with blocks
     /// </summary>
-    private void BuildRows()
+    private void BuildGrid()
     {
         // Position of first block to be added
         Vector2 blockPosition = new Vector2(-(blocksPerRow / 2) * horizontalSpacing, 0);
@@ -51,8 +98,7 @@ public class LevelBuilder : MonoBehaviour
             for (int j = 0; j < blocksPerRow; ++j)
             {
                 // Add block
-                PickupBlock block = Instantiate(prefabPickupBlock, blockPosition, Quaternion.identity);
-                block.PickupEffect = PickupEffect.Speedup;
+                Instantiate(RandomBlockPrefab, blockPosition, Quaternion.identity);
 
                 // Update position for next block in same row
                 blockPosition.x += horizontalSpacing;
@@ -87,7 +133,7 @@ public class LevelBuilder : MonoBehaviour
     private void Start()
     {
         AddPaddle();
-        BuildRows();
+        BuildGrid();
     }
 
     #endregion // MonoBehaviour Messages

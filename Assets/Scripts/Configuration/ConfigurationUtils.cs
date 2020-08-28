@@ -66,6 +66,26 @@ public static class ConfigurationUtils
     /// <value>Number of points a pickup block (freezer/speedup) is worth</value>
     public static int PickupBlockValue => configurationData.PickupBlockValue;
 
+    /// Gets the percentage of standard blocks in the game
+    /// </summary>
+    /// <value>Percentage of standard blocks in the game</value>
+    public static int StandardBlockPercentage => configurationData.StandardBlockPercentage;
+
+    /// Gets the percentage of bonus blocks in the game
+    /// </summary>
+    /// <value>Percentage of bonus blocks in the game</value>
+    public static int BonusBlockPercentage => configurationData.BonusBlockPercentage;
+
+    /// Gets the percentage of freezer pickup blocks in the game
+    /// </summary>
+    /// <value>Percentage of freezer pickup blocks in the game</value>
+    public static int FreezerBlockPercentage => configurationData.FreezerBlockPercentage;
+
+    /// Gets the percentage of speedup pickup blocks in the game
+    /// </summary>
+    /// <value>Percentage of speedup pickup blocks in the game</value>
+    public static int SpeedupBlockPercentage => configurationData.SpeedupBlockPercentage;
+
     #endregion // Properties
 
     #region Methods

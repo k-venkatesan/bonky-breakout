@@ -1,10 +1,15 @@
-10, 10, 10, 1, 5, 10, 1, 5, 3
+10, 10, 10, 1, 5, 10, 1, 5, 3, 60, 20, 10, 10
 paddle move units per second, 
 ball impulse force, 
 ball lifetime (seconds),
-ball spawn wait duration (seconds)
-random ball spawn min duration (seconds)
-random ball spawn max duration (seconds)
-standard block value (points)
-bonus block value (points)
-pickup block value (points)
+ball spawn wait duration (seconds),
+random ball spawn min duration (seconds),
+random ball spawn max duration (seconds),
+standard block value (points),
+bonus block value (points),
+pickup block value (points),
+percentage of standard blocks,
+percentage of bonus blocks,
+percentage of freezer pickup blocks,
+percentage of speedup pickup blocks (all percentages must add up to 100)
+
