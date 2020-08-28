@@ -24,6 +24,7 @@ public class ConfigurationData
     private static int bonusBlockPercentage = 20;
     private static int freezerBlockPercentage = 10;
     private static int speedupBlockPercentage = 10;
+    private static int totalBallsPerGame = 20;
 
     #endregion
 
@@ -104,6 +105,11 @@ public class ConfigurationData
     /// <value>Percentage of speedup pickup blocks in the game</value>
     public int SpeedupBlockPercentage => speedupBlockPercentage;
 
+    /// Gets the total number balls provided per game
+    /// </summary>
+    /// <value>Total number balls provided per game</value>
+    public int TotalBallsPerGame => totalBallsPerGame;
+
     #endregion
 
     #region Constructor
@@ -169,6 +175,7 @@ public class ConfigurationData
         bonusBlockPercentage = int.Parse(configurationValues[10]);
         freezerBlockPercentage = int.Parse(configurationValues[11]);
         speedupBlockPercentage = int.Parse(configurationValues[12]);
+        totalBallsPerGame = int.Parse(configurationValues[13]);
     }
 
     /// <summary>

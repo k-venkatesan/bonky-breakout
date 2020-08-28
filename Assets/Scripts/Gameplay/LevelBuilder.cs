@@ -21,7 +21,7 @@ public class LevelBuilder : MonoBehaviour
     private const float horizontalSpacing = 1.1f;
     private const float verticalSpacing = 0.7f;
     private const int blocksPerRow = 15;
-    private const int totalRows = 3;
+    private const int totalRows = 5;
 
     #endregion // Fields
 
