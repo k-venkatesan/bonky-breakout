@@ -5,6 +5,7 @@ public class StandardBlock : Block
 {
     #region Fields
 
+    // List of possible sprites for standard block
     [SerializeField]
     List<Sprite> sprites;
 

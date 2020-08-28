@@ -18,6 +18,12 @@ public class ConfigurationData
     private static int randomBallSpawnMinDurationInSeconds = 5;
     private static int randomBallSpawnMaxDurationInSeconds = 10;
     private static int standardBlockValue = 1;
+    private static int bonusBlockValue = 5;
+    private static int pickupBlockValue = 3;
+    private static int standardBlockPercentage = 60;
+    private static int bonusBlockPercentage = 20;
+    private static int freezerBlockPercentage = 10;
+    private static int speedupBlockPercentage = 10;
 
     #endregion
 
@@ -66,6 +72,38 @@ public class ConfigurationData
     /// <value>Number of points a standard block is worth</value>
     public int StandardBlockValue => standardBlockValue;
 
+    /// <summary>
+    /// Gets the number of points a bonus block is worth
+    /// </summary>
+    /// <value>Number of points a bonus block is worth</value>
+    public int BonusBlockValue => bonusBlockValue;
+
+    /// <summary>
+    /// Gets the number of points a pickup block (freezer/speedup) is worth
+    /// </summary>
+    /// <value>Number of points a pickup block (freezer/speedup) is worth</value>
+    public int PickupBlockValue => pickupBlockValue;
+
+    /// Gets the percentage of standard blocks in the game
+    /// </summary>
+    /// <value>Percentage of standard blocks in the game</value>
+    public int StandardBlockPercentage => standardBlockPercentage;
+
+    /// Gets the percentage of bonus blocks in the game
+    /// </summary>
+    /// <value>Percentage of bonus blocks in the game</value>
+    public int BonusBlockPercentage => bonusBlockPercentage;
+
+    /// Gets the percentage of freezer pickup blocks in the game
+    /// </summary>
+    /// <value>Percentage of freezer pickup blocks in the game</value>
+    public int FreezerBlockPercentage => freezerBlockPercentage;
+
+    /// Gets the percentage of speedup pickup blocks in the game
+    /// </summary>
+    /// <value>Percentage of speedup pickup blocks in the game</value>
+    public int SpeedupBlockPercentage => speedupBlockPercentage;
+
     #endregion
 
     #region Constructor
@@ -88,8 +126,9 @@ public class ConfigurationData
             input = File.OpenText(Application.streamingAssetsPath + ConfigurationDataFilePath);
             string csvConfigurationData = input.ReadLine();
 
-            // Set fields using configuration data
+            // Set fields using configuration data and verify that they are compatible
             SetConfigurationDataFields(csvConfigurationData);
+            VerifyValueCompatibility();
         }
         catch
         {
@@ -124,6 +163,27 @@ public class ConfigurationData
         randomBallSpawnMinDurationInSeconds = int.Parse(configurationValues[4]);
         randomBallSpawnMaxDurationInSeconds = int.Parse(configurationValues[5]);
         standardBlockValue = int.Parse(configurationValues[6]);
+        bonusBlockValue = int.Parse(configurationValues[7]);
+        pickupBlockValue = int.Parse(configurationValues[8]);
+        standardBlockPercentage = int.Parse(configurationValues[9]);
+        bonusBlockPercentage = int.Parse(configurationValues[10]);
+        freezerBlockPercentage = int.Parse(configurationValues[11]);
+        speedupBlockPercentage = int.Parse(configurationValues[12]);
+    }
+
+    /// <summary>
+    /// Verifies that there are no values that are incompatible with each other
+    /// </summary>
+    private void VerifyValueCompatibility()
+    {
+        // Verify that percentage distribution of blocks add up to exactly 100
+        if (standardBlockPercentage
+            + bonusBlockPercentage
+            + freezerBlockPercentage 
+            + speedupBlockPercentage != 100)
+        {
+            Debug.LogWarning("Percentage distribution of blocks do not add up to 100.");
+        }
     }
 
     #endregion // Methods
