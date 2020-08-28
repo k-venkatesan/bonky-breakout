@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Gameplay\BallSpawner.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Block.cs" />
     <Compile Include="Assets\Scripts\Gameplay\HUD.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\LevelBuilder.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Paddle.cs" />
     <Compile Include="Assets\Scripts\Gameplay\StandardBlock.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Timer.cs" />

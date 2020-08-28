@@ -97,14 +97,31 @@ public class BallSpawner : MonoBehaviour
         waitTimer.Run();
     }
 
+    /// <summary>
+    /// Verifies that serialized fields are filled and logs warnings where they are not
+    /// </summary>
+    private void VerifySerializedFields()
+    {
+        if (prefabBall == null)
+        {
+            Debug.LogWarning("Ball prefab not found. Please populate field in Inspector window.");
+        }
+    }
+
     #endregion // Methods
 
     #region MonoBehaviour Messages
+
+    private void Awake()
+    {
+        VerifySerializedFields();        
+    }
 
     private void Start()
     {
         InitializeTimers();
         CalculateBallSpawnLocationCorners();
+        RequestNewBall();
     }
 
     private void Update()
