@@ -485,6 +485,10 @@ MonoBehaviour:
     type: 3}
   prefabStandardBlock: {fileID: 8952701504295691511, guid: 9c2e922a265f2f544a1a4bb0bfc2b5d9,
     type: 3}
+  prefabBonusBlock: {fileID: 5678650001859518252, guid: 10f076d63356b424eacdd444928d20e5,
+    type: 3}
+  prefabPickupBlock: {fileID: 3299220693269035470, guid: 7b87f8e3e968db349b9020b4ea716f1d,
+    type: 3}
 --- !u!1 &1729783054
 GameObject:
   m_ObjectHideFlags: 0

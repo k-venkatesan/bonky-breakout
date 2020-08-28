@@ -54,6 +54,18 @@ public static class ConfigurationUtils
     /// <value>Number of points a standard block is worth</value>
     public static int StandardBlockValue => configurationData.StandardBlockValue;
 
+    /// <summary>
+    /// Gets the number of points a bonus block is worth
+    /// </summary>
+    /// <value>Number of points a bonus block is worth</value>
+    public static int BonusBlockValue => configurationData.BonusBlockValue;
+
+    /// <summary>
+    /// Gets the number of points a pickup block (freezer/speedup) is worth
+    /// </summary>
+    /// <value>Number of points a pickup block (freezer/speedup) is worth</value>
+    public static int PickupBlockValue => configurationData.PickupBlockValue;
+
     #endregion // Properties
 
     #region Methods

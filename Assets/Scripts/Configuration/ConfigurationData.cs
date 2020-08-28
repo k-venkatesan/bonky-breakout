@@ -18,6 +18,8 @@ public class ConfigurationData
     private static int randomBallSpawnMinDurationInSeconds = 5;
     private static int randomBallSpawnMaxDurationInSeconds = 10;
     private static int standardBlockValue = 1;
+    private static int bonusBlockValue = 5;
+    private static int pickupBlockValue = 3;
 
     #endregion
 
@@ -65,6 +67,18 @@ public class ConfigurationData
     /// </summary>
     /// <value>Number of points a standard block is worth</value>
     public int StandardBlockValue => standardBlockValue;
+
+    /// <summary>
+    /// Gets the number of points a bonus block is worth
+    /// </summary>
+    /// <value>Number of points a bonus block is worth</value>
+    public int BonusBlockValue => bonusBlockValue;
+
+    /// <summary>
+    /// Gets the number of points a pickup block (freezer/speedup) is worth
+    /// </summary>
+    /// <value>Number of points a pickup block (freezer/speedup) is worth</value>
+    public int PickupBlockValue => pickupBlockValue;
 
     #endregion
 
@@ -124,6 +138,8 @@ public class ConfigurationData
         randomBallSpawnMinDurationInSeconds = int.Parse(configurationValues[4]);
         randomBallSpawnMaxDurationInSeconds = int.Parse(configurationValues[5]);
         standardBlockValue = int.Parse(configurationValues[6]);
+        bonusBlockValue = int.Parse(configurationValues[7]);
+        pickupBlockValue = int.Parse(configurationValues[8]);
     }
 
     #endregion // Methods
