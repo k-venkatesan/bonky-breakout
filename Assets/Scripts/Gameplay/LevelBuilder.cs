@@ -44,8 +44,8 @@ public class LevelBuilder : MonoBehaviour
              * * Freezer block if between 81 and 90 (both inclusive)
              * * Speedup block if between 91 and 100 (both inclusive) */
             int randomSelection = RandomNumberGenerator.RandomNumberInRange(1, 100);
-            int randomNumberUpperLimitForBlock = 0;
-            if (randomSelection <= (randomNumberUpperLimitForBlock += ConfigurationUtils.StandardBlockPercentage)) 
+            float randomNumberUpperLimitForBlock = 0;
+            if (randomSelection <= (randomNumberUpperLimitForBlock += ConfigurationUtils.StandardBlockPercentage))
             {
                 prefabBlock = prefabStandardBlock;
             }
@@ -68,7 +68,7 @@ public class LevelBuilder : MonoBehaviour
                 Debug.LogWarning("Error in percentage distribution of blocks.");
                 prefabBlock = prefabStandardBlock;
             }
-
+            
             return prefabBlock;
         }
     }
@@ -92,7 +92,7 @@ public class LevelBuilder : MonoBehaviour
     {
         // Position of first block to be added
         Vector2 blockPosition = new Vector2(-(blocksPerRow / 2) * horizontalSpacing, 0);
-
+                
         for (int i = 0; i < totalRows; ++i)
         {
             for (int j = 0; j < blocksPerRow; ++j)
@@ -132,8 +132,8 @@ public class LevelBuilder : MonoBehaviour
 
     private void Start()
     {
-        AddPaddle();
         BuildGrid();
+        AddPaddle();
     }
 
     #endregion // MonoBehaviour Messages

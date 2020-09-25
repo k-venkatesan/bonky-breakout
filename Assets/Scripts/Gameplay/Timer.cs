@@ -61,6 +61,15 @@ public class Timer : MonoBehaviour
 	#region Methods
 
 	/// <summary>
+	/// Adds time on top of existing duration
+	/// </summary>
+	/// <param name="seconds">Number of seconds to add onto timer</param>
+	public void AddTime(float seconds)
+    {
+		totalSeconds += seconds;
+    }
+
+	/// <summary>
 	/// Runs the timer.
 	/// Because a timer of 0 duration doesn't really make sense,
 	/// the timer only runs if the total seconds is larger than 0.
@@ -101,8 +110,6 @@ public class Timer : MonoBehaviour
     {
 		UpdateStatus();		
 	}
-	
-	
 	
 	#endregion // MonoBehaviour Messages
 }

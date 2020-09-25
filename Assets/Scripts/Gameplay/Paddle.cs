@@ -17,6 +17,10 @@ public class Paddle : MonoBehaviour
     // Maximum angle (in degrees) on either side of vertical that ball can rebound off at
     private const float MaxReboundHalfAngleInDegrees = 60;
 
+    // State of paddle
+    private bool isFrozen;
+    private Timer freezeTimer;
+
     #endregion // Fields
 
     #region Properties
@@ -29,6 +33,14 @@ public class Paddle : MonoBehaviour
     #endregion // Properties
 
     #region Methods
+
+    /// <summary>
+    /// Adds listener to freezer effect activation event
+    /// </summary>
+    private void AddFreezerEffectListener()
+    {
+        EventManager.AddFreezerEffectListener(Freeze);
+    }
 
     /// <summary>
     /// Calculates valid position on X-axis to move paddle to based on attempted position and screen boundaries
@@ -53,13 +65,54 @@ public class Paddle : MonoBehaviour
     }
 
     /// <summary>
+    /// Freezes paddle in place for given duration.
+    /// If paddle is already frozen, the duration is extended by given amount.
+    /// </summary>
+    /// <param name="freezerEffectDuration">Freezer effect duration (in seconds)</param>
+    private void Freeze(float freezerEffectDuration)
+    {
+        if (isFrozen)
+        {
+            freezeTimer.AddTime(freezerEffectDuration);
+        }
+        else
+        {
+            isFrozen = true;
+            freezeTimer.Duration = freezerEffectDuration;
+            freezeTimer.Run();
+        }
+    }
+
+    /// <summary>
+    /// Initializes fields with values and references
+    /// </summary>
+    private void InitializeFields()
+    {
+        rb2D = GetComponent<Rigidbody2D>();
+        colliderHalfWidth = GetComponent<BoxCollider2D>().size[0] / 2;
+        freezeTimer = gameObject.AddComponent<Timer>();
+        isFrozen = false;
+    }
+
+    /// <summary>
+    /// Monitors freeze status of paddle and updates it when freeze timer finishes
+    /// </summary>
+    private void MonitorFreezeStatus()
+    {
+        if (isFrozen && freezeTimer.Finished)
+        {
+            isFrozen = false;
+        }
+    }
+
+    /// <summary>
     /// Moves paddle in appropriate direction based on input received
     /// </summary>
     private void ProcessMotionInput()
     {
-        // Check if input to move paddle is received
+        // Check if input to move paddle is received and process only if paddle is not required to be frozen
         float motionInput = Input.GetAxis("Horizontal");
-        if (motionInput != 0)
+        if (motionInput != 0 && !isFrozen)
         {
             /* Determine position to move to based on input direction and paddle speed
              * set in configuration file - 'newPosition.y' is not explicitly set to
@@ -117,22 +170,19 @@ public class Paddle : MonoBehaviour
         
     }
 
-    /// <summary>
-    /// Retrieves necessary values from and references to components
-    /// </summary>
-    private void RetrieveValuesAndReferences()
-    {
-        rb2D = GetComponent<Rigidbody2D>();
-        colliderHalfWidth = GetComponent<BoxCollider2D>().size[0] / 2;
-    }
-
     #endregion // Methods
 
     #region MonoBehaviour Messages
     
     private void Start()
     {
-        RetrieveValuesAndReferences();
+        InitializeFields();
+        AddFreezerEffectListener();
+    }
+
+    private void Update()
+    {
+        MonitorFreezeStatus();
     }
 
     private void FixedUpdate()

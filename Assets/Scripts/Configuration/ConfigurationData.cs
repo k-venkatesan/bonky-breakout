@@ -20,11 +20,12 @@ public class ConfigurationData
     private static int standardBlockValue = 1;
     private static int bonusBlockValue = 5;
     private static int pickupBlockValue = 3;
-    private static int standardBlockPercentage = 60;
-    private static int bonusBlockPercentage = 20;
-    private static int freezerBlockPercentage = 10;
-    private static int speedupBlockPercentage = 10;
+    private static float standardBlockPercentage = 60;
+    private static float bonusBlockPercentage = 20;
+    private static float freezerBlockPercentage = 10;
+    private static float speedupBlockPercentage = 10;
     private static int totalBallsPerGame = 20;
+    private static float freezerEffectDurationInSeconds = 2;
 
     #endregion
 
@@ -88,27 +89,32 @@ public class ConfigurationData
     /// Gets the percentage of standard blocks in the game
     /// </summary>
     /// <value>Percentage of standard blocks in the game</value>
-    public int StandardBlockPercentage => standardBlockPercentage;
+    public float StandardBlockPercentage => standardBlockPercentage;
 
     /// Gets the percentage of bonus blocks in the game
     /// </summary>
     /// <value>Percentage of bonus blocks in the game</value>
-    public int BonusBlockPercentage => bonusBlockPercentage;
+    public float BonusBlockPercentage => bonusBlockPercentage;
 
     /// Gets the percentage of freezer pickup blocks in the game
     /// </summary>
     /// <value>Percentage of freezer pickup blocks in the game</value>
-    public int FreezerBlockPercentage => freezerBlockPercentage;
+    public float FreezerBlockPercentage => freezerBlockPercentage;
 
     /// Gets the percentage of speedup pickup blocks in the game
     /// </summary>
     /// <value>Percentage of speedup pickup blocks in the game</value>
-    public int SpeedupBlockPercentage => speedupBlockPercentage;
+    public float SpeedupBlockPercentage => speedupBlockPercentage;
 
     /// Gets the total number balls provided per game
     /// </summary>
     /// <value>Total number balls provided per game</value>
     public int TotalBallsPerGame => totalBallsPerGame;
+
+    /// Gets the duration (in seconds) for which the freezer effect lasts
+    /// </summary>
+    /// <value>Duration for which freezer effect lasts (in seconds)</value>
+    public float FreezerEffectDurationInSeconds => freezerEffectDurationInSeconds;
 
     #endregion
 
@@ -171,11 +177,12 @@ public class ConfigurationData
         standardBlockValue = int.Parse(configurationValues[6]);
         bonusBlockValue = int.Parse(configurationValues[7]);
         pickupBlockValue = int.Parse(configurationValues[8]);
-        standardBlockPercentage = int.Parse(configurationValues[9]);
-        bonusBlockPercentage = int.Parse(configurationValues[10]);
-        freezerBlockPercentage = int.Parse(configurationValues[11]);
-        speedupBlockPercentage = int.Parse(configurationValues[12]);
+        standardBlockPercentage = float.Parse(configurationValues[9]);
+        bonusBlockPercentage = float.Parse(configurationValues[10]);
+        freezerBlockPercentage = float.Parse(configurationValues[11]);
+        speedupBlockPercentage = float.Parse(configurationValues[12]);
         totalBallsPerGame = int.Parse(configurationValues[13]);
+        freezerEffectDurationInSeconds = float.Parse(configurationValues[14]);
     }
 
     /// <summary>

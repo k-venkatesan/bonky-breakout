@@ -37,7 +37,7 @@ public class Block : MonoBehaviour
 
     #region MonoBehaviour Messages
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         ProcessCollision(collision);
     }

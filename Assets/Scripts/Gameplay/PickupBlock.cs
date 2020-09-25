@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class PickupBlock : Block
 {
@@ -10,8 +11,12 @@ public class PickupBlock : Block
     [SerializeField]
     private Sprite speedupSprite;
 
-    // Pickup effect of block
+    // Pickup effect type and duration
     private PickupEffect pickupEffect;
+    private float pickupEffectDuration;
+
+    // Pickup effect events
+    private FreezerEffectActivated freezerEffectActivated;
 
     #endregion // Fields
 
@@ -24,22 +29,25 @@ public class PickupBlock : Block
     {
         set
         {
-            // Set pickup effect
             pickupEffect = value;
 
-            // Set sprite based on pickup effect
-            switch (pickupEffect)
-            {
-                case PickupEffect.Freezer:
-                    GetComponent<SpriteRenderer>().sprite = freezerSprite;
-                    break;
-                case PickupEffect.Speedup:
-                    GetComponent<SpriteRenderer>().sprite = speedupSprite;
-                    break;
-                default:
-                    Debug.LogWarning("Sprite not correctly applied to pickup block");
-                    break;
-            }
+            //// Set sprite, duration and event invoker for pickup effect
+            //switch (pickupEffect)
+            //{
+            //    case PickupEffect.Freezer:
+            //        GetComponent<SpriteRenderer>().sprite = freezerSprite;
+            //        pickupEffectDuration = ConfigurationUtils.FreezerEffectDurationInSeconds;
+            //        freezerEffectActivated = new FreezerEffectActivated();
+            //        EventManager.AddFreezerEffectInvoker(this);
+            //        break;
+
+            //    case PickupEffect.Speedup:
+            //        GetComponent<SpriteRenderer>().sprite = speedupSprite;
+            //        break;
+            //    default:
+            //        Debug.LogWarning("Effect not correctly assigned to pickup block");
+            //        break;
+            //}
         }
     }
 
@@ -48,11 +56,62 @@ public class PickupBlock : Block
     #region Methods
 
     /// <summary>
+    /// Adds listener to freezer effect activation event
+    /// </summary>
+    /// <param name="listener">Listener to freezer effect activation event</param>
+    public void AddFreezerEffectListener(UnityAction<float> listener)
+    {
+        freezerEffectActivated.AddListener(listener);
+    }
+
+    /// <summary>
+    /// Applies sprite, duration and event invoker for pickup effect
+    /// </summary>
+    private void ApplyPickupEffectFeatures()
+    {
+        switch (pickupEffect)
+        {
+            case PickupEffect.Freezer:
+                GetComponent<SpriteRenderer>().sprite = freezerSprite;
+                pickupEffectDuration = ConfigurationUtils.FreezerEffectDurationInSeconds;
+                freezerEffectActivated = new FreezerEffectActivated();
+                EventManager.AddFreezerEffectInvoker(this);
+                break;
+
+            case PickupEffect.Speedup:
+                GetComponent<SpriteRenderer>().sprite = speedupSprite;
+                break;
+
+            default:
+                Debug.LogWarning("Effect not correctly assigned to pickup block");
+                break;
+        }
+    }
+
+    /// <summary>
     /// Retrieves and assigns the points value of a pickup block (freezer/speedup) from the configuration file
     /// </summary>
     private void AssignPointsValue()
     {
         pointsWorth = ConfigurationUtils.PickupBlockValue;
+    }
+
+    /// <summary>
+    /// Invokes pickup effect activation and processes other standard Block collision effects
+    /// </summary>
+    /// <param name="collision">Object containing information about collision</param>
+    private void ProcessCollision(Collision2D collision)
+    {
+        // Invoke pickup effect activation
+        switch (pickupEffect)
+        {
+            case PickupEffect.Freezer:
+                freezerEffectActivated.Invoke(pickupEffectDuration);
+                break;
+        }
+
+        // Continue with rest of collision processing
+        base.OnCollisionEnter2D(collision);
     }
 
     /// <summary>
@@ -78,6 +137,12 @@ public class PickupBlock : Block
     private void Start()
     {
         AssignPointsValue();
+        ApplyPickupEffectFeatures();
+    }
+
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        ProcessCollision(collision);
     }
 
     #endregion // MonoBehaviour Messages

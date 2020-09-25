@@ -66,30 +66,41 @@ public static class ConfigurationUtils
     /// <value>Number of points a pickup block (freezer/speedup) is worth</value>
     public static int PickupBlockValue => configurationData.PickupBlockValue;
 
+    /// <summary>
     /// Gets the percentage of standard blocks in the game
     /// </summary>
     /// <value>Percentage of standard blocks in the game</value>
-    public static int StandardBlockPercentage => configurationData.StandardBlockPercentage;
+    public static float StandardBlockPercentage => configurationData.StandardBlockPercentage;
 
+    /// <summary>
     /// Gets the percentage of bonus blocks in the game
     /// </summary>
     /// <value>Percentage of bonus blocks in the game</value>
-    public static int BonusBlockPercentage => configurationData.BonusBlockPercentage;
+    public static float BonusBlockPercentage => configurationData.BonusBlockPercentage;
 
+    /// <summary>
     /// Gets the percentage of freezer pickup blocks in the game
     /// </summary>
     /// <value>Percentage of freezer pickup blocks in the game</value>
-    public static int FreezerBlockPercentage => configurationData.FreezerBlockPercentage;
+    public static float FreezerBlockPercentage => configurationData.FreezerBlockPercentage;
 
+    /// <summary>
     /// Gets the percentage of speedup pickup blocks in the game
     /// </summary>
     /// <value>Percentage of speedup pickup blocks in the game</value>
-    public static int SpeedupBlockPercentage => configurationData.SpeedupBlockPercentage;
+    public static float SpeedupBlockPercentage => configurationData.SpeedupBlockPercentage;
 
+    /// <summary>
     /// Gets the total number balls provided per game
     /// </summary>
     /// <value>Total number balls provided per game</value>
     public static int TotalBallsPerGame => configurationData.TotalBallsPerGame;
+
+    /// <summary>
+    /// Gets the duration (in seconds) for which the freezer effect lasts
+    /// </summary>
+    /// <value>Duration for which freezer effect lasts (in seconds)</value>
+    public static float FreezerEffectDurationInSeconds => configurationData.FreezerEffectDurationInSeconds;
 
     #endregion // Properties
 
