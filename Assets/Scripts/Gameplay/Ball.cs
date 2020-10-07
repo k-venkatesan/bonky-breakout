@@ -20,6 +20,9 @@ public class Ball : MonoBehaviour
     private bool isSpeedupActive;
     private Timer speedupTimer;
 
+    // Multiplication factor for speedup effect
+    private float speedupFactor;
+
     #endregion // Fields
 
     #region Components
@@ -85,6 +88,11 @@ public class Ball : MonoBehaviour
     {
         if (isSpeedupActive && speedupTimer.Finished)
         {
+            // Reset ball to default speed
+            float defaultSpeed = rb2D.velocity.magnitude / speedupFactor;
+            rb2D.velocity = defaultSpeed * rb2D.velocity.normalized;
+            
+            // Reset flag
             isSpeedupActive = false;
         }
     }
@@ -110,17 +118,19 @@ public class Ball : MonoBehaviour
     /// <param name="speedupEffectDuration">Speedup effect duration (in seconds)</param>
     private void Speedup(float speedupFactor, float speedupEffectDuration)
     {
-        // Set new speed
-        float newSpeed = speedupFactor * rb2D.velocity.magnitude;
-        rb2D.velocity = newSpeed * rb2D.velocity.normalized;
-
-        // Set duration of new speed
         if (isSpeedupActive)
         {
+            // Extend duration of new speed
             speedupTimer.AddTime(speedupEffectDuration);
         }
         else
         {
+            // Set new speed
+            this.speedupFactor = speedupFactor;
+            float newSpeed = speedupFactor * rb2D.velocity.magnitude;
+            rb2D.velocity = newSpeed * rb2D.velocity.normalized;
+
+            // Set duration of new speed
             isSpeedupActive = true;
             speedupTimer.Duration = speedupEffectDuration;
             speedupTimer.Run();
