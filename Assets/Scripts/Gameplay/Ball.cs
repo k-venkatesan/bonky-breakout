@@ -14,7 +14,11 @@ public class Ball : MonoBehaviour
     private Rigidbody2D rb2D;
 
     // Timer used to track eclipsed lifetime
-    private Timer timer;
+    private Timer lifeTimer;
+
+    // State of ball
+    private bool isSpeedupActive;
+    private Timer speedupTimer;
 
     #endregion // Fields
 
@@ -28,6 +32,14 @@ public class Ball : MonoBehaviour
     #endregion // Components
 
     #region Methods
+
+    /// <summary>
+    /// Adds listener to speedup effect activation event
+    /// </summary>
+    private void AddSpeedupEffectListener()
+    {
+        EventManager.AddSpeedupEffectListener(Speedup);
+    }
 
     /// <summary>
     /// Apply impulse force to ball
@@ -56,6 +68,28 @@ public class Ball : MonoBehaviour
     }
 
     /// <summary>
+    /// Initializes fields with values and references
+    /// </summary>
+    private void InitializeFields()
+    {
+        rb2D = GetComponent<Rigidbody2D>();
+        lifeTimer = GetComponent<Timer>();
+        speedupTimer = gameObject.AddComponent<Timer>();
+        isSpeedupActive = false;
+    }
+
+    /// <summary>
+    /// Monitors speedup status of ball and updates it when speedup timer finishes
+    /// </summary>
+    private void MonitorSpeedupStatus()
+    {
+        if (isSpeedupActive && speedupTimer.Finished)
+        {
+            isSpeedupActive = false;
+        }
+    }
+
+    /// <summary>
     /// Checks if reason for ball disappearance is because it has fallen below bottom edge of screen.
     /// Destroys the ball and spawns a new one if so.
     /// </summary>
@@ -69,21 +103,37 @@ public class Ball : MonoBehaviour
     }
 
     /// <summary>
-    /// Retrieves necessary values from and references to components
+    /// Speeds up ball by given factor for given duration.
+    /// If speed-up is already active, the duration is extended by given amount.
     /// </summary>
-    private void RetrieveValuesAndReferences()
+    /// <param name="speedupFactor">Factor by which to speed up ball</param>
+    /// <param name="speedupEffectDuration">Speedup effect duration (in seconds)</param>
+    private void Speedup(float speedupFactor, float speedupEffectDuration)
     {
-        rb2D = GetComponent<Rigidbody2D>();
-        timer = GetComponent<Timer>();
+        // Set new speed
+        float newSpeed = speedupFactor * rb2D.velocity.magnitude;
+        rb2D.velocity = newSpeed * rb2D.velocity.normalized;
+
+        // Set duration of new speed
+        if (isSpeedupActive)
+        {
+            speedupTimer.AddTime(speedupEffectDuration);
+        }
+        else
+        {
+            isSpeedupActive = true;
+            speedupTimer.Duration = speedupEffectDuration;
+            speedupTimer.Run();
+        }
     }
 
     /// <summary>
     /// Starts timer to begin tracking the eclipsed lifetime of the ball
     /// </summary>
-    private void StartTimer()
+    private void StartLifeTimer()
     {
-        timer.Duration = ConfigurationUtils.BallLifetimeInSeconds;
-        timer.Run();
+        lifeTimer.Duration = ConfigurationUtils.BallLifetimeInSeconds;
+        lifeTimer.Run();
     }
 
     /// <summary>
@@ -92,7 +142,7 @@ public class Ball : MonoBehaviour
     /// </summary>
     private void UpdateLifeStatus()
     {
-        if (timer.Finished)
+        if (lifeTimer.Finished)
         {
             Camera.main.GetComponent<BallSpawner>().RequestNewBall();
             Destroy(gameObject);
@@ -105,13 +155,15 @@ public class Ball : MonoBehaviour
 
     private void Start()
     {
-        RetrieveValuesAndReferences();
+        InitializeFields();
+        AddSpeedupEffectListener();
         ApplyImpulseForce();
-        StartTimer();
+        StartLifeTimer();
     }
 
     private void Update()
     {
+        MonitorSpeedupStatus();
         UpdateLifeStatus();
     }
 

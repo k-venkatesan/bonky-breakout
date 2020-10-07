@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Configuration\ConfigurationUtils.cs" />
     <Compile Include="Assets\Scripts\Events\EventManager.cs" />
     <Compile Include="Assets\Scripts\Events\FreezerEffectActivated.cs" />
+    <Compile Include="Assets\Scripts\Events\SpeedupEffectActivated.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Ball.cs" />
     <Compile Include="Assets\Scripts\Gameplay\BallSpawner.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Block.cs" />

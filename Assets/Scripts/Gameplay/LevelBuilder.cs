@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UIElements;
+﻿using UnityEngine;
 
 public class LevelBuilder : MonoBehaviour
 {
@@ -26,53 +23,6 @@ public class LevelBuilder : MonoBehaviour
     #endregion // Fields
 
     #region Components
-
-    /// <summary>
-    /// Gets prefab of random block based on percentage distribution
-    /// </summary>
-    private Block RandomBlockPrefab
-    {
-        get
-        {
-            // Block prefab to be returned
-            Block prefabBlock;
-
-            /* If percentage distributions are 60, 20, 10 and 10 for example, then block
-             * type is assigned based on random number selection as below:
-             * * Standard block if less than or equal to 60
-             * * Bonus block if between 61 and 80 (both inclusive)
-             * * Freezer block if between 81 and 90 (both inclusive)
-             * * Speedup block if between 91 and 100 (both inclusive) */
-            int randomSelection = RandomNumberGenerator.RandomNumberInRange(1, 100);
-            float randomNumberUpperLimitForBlock = 0;
-            if (randomSelection <= (randomNumberUpperLimitForBlock += ConfigurationUtils.StandardBlockPercentage))
-            {
-                prefabBlock = prefabStandardBlock;
-            }
-            else if (randomSelection <= (randomNumberUpperLimitForBlock += ConfigurationUtils.BonusBlockPercentage))
-            {
-                prefabBlock = prefabBonusBlock;
-            }
-            else if (randomSelection <= (randomNumberUpperLimitForBlock += ConfigurationUtils.FreezerBlockPercentage))
-            {
-                prefabBlock = prefabPickupBlock;
-                (prefabBlock as PickupBlock).PickupEffect = PickupEffect.Freezer;
-            }
-            else if (randomSelection <= (randomNumberUpperLimitForBlock += ConfigurationUtils.SpeedupBlockPercentage))
-            {
-                prefabBlock = prefabPickupBlock;
-                (prefabBlock as PickupBlock).PickupEffect = PickupEffect.Speedup;
-            }
-            else
-            {
-                Debug.LogWarning("Error in percentage distribution of blocks.");
-                prefabBlock = prefabStandardBlock;
-            }
-            
-            return prefabBlock;
-        }
-    }
-
     #endregion // Components
 
     #region Methods
@@ -83,6 +33,49 @@ public class LevelBuilder : MonoBehaviour
     private void AddPaddle()
     {
         Instantiate(prefabPaddle);
+    }
+
+    /// <summary>
+    /// Adds random block to level based on configured probability distribution
+    /// </summary>
+    /// <param name="position">Position in grid where block is to be added</param>
+    private void AddRandomBlock(Vector2 position)
+    {
+        /* If percentage distributions are 60, 20, 10 and 10 for example, then block
+         * type is assigned based on random number selection as below:
+         * * Standard block if less than or equal to 60
+         * * Bonus block if between 61 and 80 (both inclusive)
+         * * Freezer block if between 81 and 90 (both inclusive)
+         * * Speedup block if between 91 and 100 (both inclusive) */
+        int randomSelection = RandomNumberGenerator.RandomNumberInRange(1, 100);
+        float randomNumberUpperLimitForBlock = 0;
+        if (randomSelection <= (randomNumberUpperLimitForBlock += ConfigurationUtils.StandardBlockPercentage))
+        {
+            Instantiate(prefabStandardBlock, position, Quaternion.identity);
+        }
+        else if (randomSelection <= (randomNumberUpperLimitForBlock += ConfigurationUtils.BonusBlockPercentage))
+        {
+            Instantiate(prefabBonusBlock, position, Quaternion.identity);
+        }
+        else if (randomSelection <= (randomNumberUpperLimitForBlock += ConfigurationUtils.FreezerBlockPercentage))
+        {
+            prefabPickupBlock.gameObject.SetActive(false);
+            PickupBlock block = Instantiate(prefabPickupBlock, position, Quaternion.identity);
+            block.PickupEffect = PickupEffect.Freezer;
+            block.gameObject.SetActive(true);
+        }
+        else if (randomSelection <= (randomNumberUpperLimitForBlock += ConfigurationUtils.SpeedupBlockPercentage))
+        {
+            prefabPickupBlock.gameObject.SetActive(false);
+            PickupBlock block = Instantiate(prefabPickupBlock, position, Quaternion.identity);
+            block.PickupEffect = PickupEffect.Speedup;
+            block.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Error in percentage distribution of blocks.");
+            Instantiate(prefabStandardBlock, position, Quaternion.identity);
+        }
     }
 
     /// <summary>
@@ -98,7 +91,7 @@ public class LevelBuilder : MonoBehaviour
             for (int j = 0; j < blocksPerRow; ++j)
             {
                 // Add block
-                Instantiate(RandomBlockPrefab, blockPosition, Quaternion.identity);
+                AddRandomBlock(blockPosition);
 
                 // Update position for next block in same row
                 blockPosition.x += horizontalSpacing;

@@ -26,6 +26,8 @@ public class ConfigurationData
     private static float speedupBlockPercentage = 10;
     private static int totalBallsPerGame = 20;
     private static float freezerEffectDurationInSeconds = 2;
+    private static float speedupEffectDurationInSeconds = 2;
+    private static float speedupFactor = 1.5f;
 
     #endregion
 
@@ -86,16 +88,19 @@ public class ConfigurationData
     /// <value>Number of points a pickup block (freezer/speedup) is worth</value>
     public int PickupBlockValue => pickupBlockValue;
 
+    /// <summary>
     /// Gets the percentage of standard blocks in the game
     /// </summary>
     /// <value>Percentage of standard blocks in the game</value>
     public float StandardBlockPercentage => standardBlockPercentage;
 
+    /// <summary>
     /// Gets the percentage of bonus blocks in the game
     /// </summary>
     /// <value>Percentage of bonus blocks in the game</value>
     public float BonusBlockPercentage => bonusBlockPercentage;
 
+    /// <summary>
     /// Gets the percentage of freezer pickup blocks in the game
     /// </summary>
     /// <value>Percentage of freezer pickup blocks in the game</value>
@@ -106,15 +111,29 @@ public class ConfigurationData
     /// <value>Percentage of speedup pickup blocks in the game</value>
     public float SpeedupBlockPercentage => speedupBlockPercentage;
 
+    /// <summary>
     /// Gets the total number balls provided per game
     /// </summary>
     /// <value>Total number balls provided per game</value>
     public int TotalBallsPerGame => totalBallsPerGame;
 
+    /// <summary>
     /// Gets the duration (in seconds) for which the freezer effect lasts
     /// </summary>
     /// <value>Duration for which freezer effect lasts (in seconds)</value>
     public float FreezerEffectDurationInSeconds => freezerEffectDurationInSeconds;
+
+    /// <summary>
+    /// Gets the duration (in seconds) for which the speedup effect lasts
+    /// </summary>
+    /// <value>Duration for which speedup effect lasts (in seconds)</value>
+    public float SpeedupEffectDurationInSeconds => speedupEffectDurationInSeconds;
+
+    /// <summary>
+    /// Gets the factor by which the ball is speeded-up by when the speedup effect is active
+    /// </summary>
+    /// <value>Factor by which ball is speeded-up during speedup effect</value>
+    public float SpeedupFactor => speedupFactor;
 
     #endregion
 
@@ -183,6 +202,8 @@ public class ConfigurationData
         speedupBlockPercentage = float.Parse(configurationValues[12]);
         totalBallsPerGame = int.Parse(configurationValues[13]);
         freezerEffectDurationInSeconds = float.Parse(configurationValues[14]);
+        speedupEffectDurationInSeconds = float.Parse(configurationValues[15]);
+        speedupFactor = float.Parse(configurationValues[16]);
     }
 
     /// <summary>

@@ -1,4 +1,4 @@
-10, 10, 10, 1, 5, 10, 1, 5, 3, 60, 20, 10, 10, 20, 2
+10, 10, 10, 1, 5, 10, 1, 5, 3, 60, 20, 10, 10, 20, 2, 2, 1.5
 paddle move units per second, 
 ball impulse force, 
 ball lifetime (seconds),
@@ -13,5 +13,7 @@ percentage of bonus blocks,
 percentage of freezer pickup blocks,
 percentage of speedup pickup blocks (all percentages must add up to 100),
 total balls per game,
-freezer effect duration (seconds)
+freezer effect duration (seconds),
+speedup effect duration (seconds),
+speedup factor
 

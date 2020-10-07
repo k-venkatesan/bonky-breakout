@@ -11,12 +11,14 @@ public class PickupBlock : Block
     [SerializeField]
     private Sprite speedupSprite;
 
-    // Pickup effect type and duration
+    // Pickup effect type, duration and factor
     private PickupEffect pickupEffect;
     private float pickupEffectDuration;
+    private float speedupFactor;
 
     // Pickup effect events
     private FreezerEffectActivated freezerEffectActivated;
+    private SpeedupEffectActivated speedupEffectActivated;
 
     #endregion // Fields
 
@@ -27,28 +29,7 @@ public class PickupBlock : Block
     /// </summary>
     public PickupEffect PickupEffect
     {
-        set
-        {
-            pickupEffect = value;
-
-            //// Set sprite, duration and event invoker for pickup effect
-            //switch (pickupEffect)
-            //{
-            //    case PickupEffect.Freezer:
-            //        GetComponent<SpriteRenderer>().sprite = freezerSprite;
-            //        pickupEffectDuration = ConfigurationUtils.FreezerEffectDurationInSeconds;
-            //        freezerEffectActivated = new FreezerEffectActivated();
-            //        EventManager.AddFreezerEffectInvoker(this);
-            //        break;
-
-            //    case PickupEffect.Speedup:
-            //        GetComponent<SpriteRenderer>().sprite = speedupSprite;
-            //        break;
-            //    default:
-            //        Debug.LogWarning("Effect not correctly assigned to pickup block");
-            //        break;
-            //}
-        }
+        set => pickupEffect = value;
     }
 
     #endregion // Properties
@@ -61,7 +42,16 @@ public class PickupBlock : Block
     /// <param name="listener">Listener to freezer effect activation event</param>
     public void AddFreezerEffectListener(UnityAction<float> listener)
     {
-        freezerEffectActivated.AddListener(listener);
+        freezerEffectActivated?.AddListener(listener);
+    }
+
+    /// <summary>
+    /// Adds listener to speedup effect activation event
+    /// </summary>
+    /// <param name="listener">Listener to speedup effect activation event</param>
+    public void AddSpeedupEffectListener(UnityAction<float, float> listener)
+    {
+        speedupEffectActivated?.AddListener(listener);
     }
 
     /// <summary>
@@ -69,23 +59,29 @@ public class PickupBlock : Block
     /// </summary>
     private void ApplyPickupEffectFeatures()
     {
+        // Apply pickup effect features
         switch (pickupEffect)
         {
             case PickupEffect.Freezer:
                 GetComponent<SpriteRenderer>().sprite = freezerSprite;
                 pickupEffectDuration = ConfigurationUtils.FreezerEffectDurationInSeconds;
                 freezerEffectActivated = new FreezerEffectActivated();
-                EventManager.AddFreezerEffectInvoker(this);
                 break;
 
             case PickupEffect.Speedup:
                 GetComponent<SpriteRenderer>().sprite = speedupSprite;
+                pickupEffectDuration = ConfigurationUtils.SpeedupEffectDurationInSeconds;
+                speedupFactor = ConfigurationUtils.SpeedupFactor;
+                speedupEffectActivated = new SpeedupEffectActivated();
                 break;
 
             default:
                 Debug.LogWarning("Effect not correctly assigned to pickup block");
                 break;
         }
+
+        // Add self as pickup effect invoker
+        EventManager.AddPickupEffectInvoker(this);
     }
 
     /// <summary>
@@ -107,6 +103,10 @@ public class PickupBlock : Block
         {
             case PickupEffect.Freezer:
                 freezerEffectActivated.Invoke(pickupEffectDuration);
+                break;
+
+            case PickupEffect.Speedup:
+                speedupEffectActivated.Invoke(pickupEffectDuration, speedupFactor);
                 break;
         }
 

@@ -102,6 +102,18 @@ public static class ConfigurationUtils
     /// <value>Duration for which freezer effect lasts (in seconds)</value>
     public static float FreezerEffectDurationInSeconds => configurationData.FreezerEffectDurationInSeconds;
 
+    /// <summary>
+    /// Gets the duration (in seconds) for which the speedup effect lasts
+    /// </summary>
+    /// <value>Duration for which speedup effect lasts (in seconds)</value>
+    public static float SpeedupEffectDurationInSeconds => configurationData.SpeedupEffectDurationInSeconds;
+
+    /// <summary>
+    /// Gets the factor by which the ball is speeded-up by when the speedup effect is active
+    /// </summary>
+    /// <value>Factor by which ball is speeded-up during speedup effect</value>
+    public static float SpeedupFactor => configurationData.SpeedupFactor;
+
     #endregion // Properties
 
     #region Methods
