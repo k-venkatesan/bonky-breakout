@@ -23,6 +23,10 @@ public class Ball : MonoBehaviour
     // Multiplication factor for speedup effect
     private float speedupFactor;
 
+    // Flags that control speedup effect application
+    private bool isSpeedAdjustmentRequired = false;
+    private bool isSpeedupEffectActive = false;
+
     #endregion // Fields
 
     #region Components
@@ -50,7 +54,7 @@ public class Ball : MonoBehaviour
     private void ApplyImpulseForce()
     {
         // Get force magnitude set in configuation file
-        float forceMagnitude = ConfigurationUtils.BallImpulseForce;
+        float forceMagnitude = (EffectUtils.IsSpeedupEffectActive? EffectUtils.SpeedupFactor : 1) * ConfigurationUtils.BallImpulseForce;
 
         // Set force direction
         Vector2 forceDirection = new Vector2(Mathf.Cos(ForceAngleInRadians), Mathf.Sin(ForceAngleInRadians));
@@ -77,24 +81,6 @@ public class Ball : MonoBehaviour
     {
         rb2D = GetComponent<Rigidbody2D>();
         lifeTimer = GetComponent<Timer>();
-        speedupTimer = gameObject.AddComponent<Timer>();
-        isSpeedupActive = false;
-    }
-
-    /// <summary>
-    /// Monitors speedup status of ball and updates it when speedup timer finishes
-    /// </summary>
-    private void MonitorSpeedupStatus()
-    {
-        if (isSpeedupActive && speedupTimer.Finished)
-        {
-            // Reset ball to default speed
-            float defaultSpeed = rb2D.velocity.magnitude / speedupFactor;
-            rb2D.velocity = defaultSpeed * rb2D.velocity.normalized;
-            
-            // Reset flag
-            isSpeedupActive = false;
-        }
     }
 
     /// <summary>
@@ -159,6 +145,41 @@ public class Ball : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates speedup effect of ball in accordance with global effect status
+    /// </summary>
+    private void UpdateSpeedupEffect()
+    {
+        // Compare speedup effect of ball to global effect status
+        if (isSpeedupEffectActive != EffectUtils.IsSpeedupEffectActive)
+        {
+            isSpeedupEffectActive = EffectUtils.IsSpeedupEffectActive;
+            isSpeedAdjustmentRequired = true;
+        }
+
+        // Modify ball speed if required
+        if (isSpeedupEffectActive)
+        {
+            if (isSpeedAdjustmentRequired)
+            {
+                rb2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+                float newSpeed = EffectUtils.SpeedupFactor * rb2D.velocity.magnitude;
+                rb2D.velocity = newSpeed * rb2D.velocity.normalized;
+                isSpeedAdjustmentRequired = false;
+            }
+        }
+        else
+        {
+            if (isSpeedAdjustmentRequired)
+            {
+                rb2D.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+                float newSpeed = (1 / EffectUtils.SpeedupFactor) * rb2D.velocity.magnitude;
+                rb2D.velocity = newSpeed * rb2D.velocity.normalized;
+                isSpeedAdjustmentRequired = false;
+            }
+        }
+    }
+
     #endregion // Methods
 
     #region MonoBehaviour Messages
@@ -166,15 +187,14 @@ public class Ball : MonoBehaviour
     private void Start()
     {
         InitializeFields();
-        AddSpeedupEffectListener();
         ApplyImpulseForce();
         StartLifeTimer();
     }
 
     private void Update()
     {
-        MonitorSpeedupStatus();
         UpdateLifeStatus();
+        UpdateSpeedupEffect();        
     }
 
     private void OnBecameInvisible()

@@ -77,8 +77,10 @@
     <Compile Include="Assets\Scripts\Gameplay\Paddle.cs" />
     <Compile Include="Assets\Scripts\Gameplay\PickupBlock.cs" />
     <Compile Include="Assets\Scripts\Gameplay\PickupEffect.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\SpeedupEffectMonitor.cs" />
     <Compile Include="Assets\Scripts\Gameplay\StandardBlock.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Timer.cs" />
+    <Compile Include="Assets\Scripts\Util\EffectUtils.cs" />
     <Compile Include="Assets\Scripts\Util\GameInitializer.cs" />
     <Compile Include="Assets\Scripts\Util\RandomNumberGenerator.cs" />
     <Compile Include="Assets\Scripts\Util\ScreenUtils.cs" />

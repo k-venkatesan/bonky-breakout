@@ -30,7 +30,7 @@ public static class EventManager
         {
             pickupEffectInvoker.AddFreezerEffectListener(freezerEffectListener);
         }
-        else if (speedupEffectListener != null)
+        if (speedupEffectListener != null)
         {
             pickupEffectInvoker.AddSpeedupEffectListener(speedupEffectListener);
         }

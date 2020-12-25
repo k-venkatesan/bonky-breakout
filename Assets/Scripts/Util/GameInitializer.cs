@@ -21,6 +21,7 @@ public class GameInitializer : MonoBehaviour
         ScreenUtils.Initialize();
         ConfigurationUtils.Initialize();
         RandomNumberGenerator.Initialize();
+        EffectUtils.Initialize();
     }
 
     #endregion // MonoBehaviour Messages
