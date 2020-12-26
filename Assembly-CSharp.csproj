@@ -80,6 +80,8 @@
     <Compile Include="Assets\Scripts\Gameplay\SpeedupEffectMonitor.cs" />
     <Compile Include="Assets\Scripts\Gameplay\StandardBlock.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Timer.cs" />
+    <Compile Include="Assets\Scripts\Menu\MenuManager.cs" />
+    <Compile Include="Assets\Scripts\Menu\MenuName.cs" />
     <Compile Include="Assets\Scripts\Util\EffectUtils.cs" />
     <Compile Include="Assets\Scripts\Util\GameInitializer.cs" />
     <Compile Include="Assets\Scripts\Util\RandomNumberGenerator.cs" />
