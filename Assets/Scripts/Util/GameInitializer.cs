@@ -12,6 +12,19 @@ public class GameInitializer : MonoBehaviour
     #endregion // Components
 
     #region Methods
+
+    /// <summary>
+    /// Checks for pressing of 'Esc' key and opens Pause Menu when so
+    /// </summary>
+    private void CheckForPauseMenuOpening()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0;
+            Instantiate(Resources.Load("PauseMenuCanvas"));
+        }
+    }
+
     #endregion // Methods
 
     #region MonoBehaviour Messages
@@ -22,6 +35,11 @@ public class GameInitializer : MonoBehaviour
         ConfigurationUtils.Initialize();
         RandomNumberGenerator.Initialize();
         EffectUtils.Initialize();
+    }
+
+    private void Update()
+    {
+        CheckForPauseMenuOpening();
     }
 
     #endregion // MonoBehaviour Messages
