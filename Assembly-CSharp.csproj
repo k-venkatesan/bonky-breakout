@@ -82,8 +82,7 @@
     <Compile Include="Assets\Scripts\Gameplay\Timer.cs" />
     <Compile Include="Assets\Scripts\Menu\HelpCanvas.cs" />
     <Compile Include="Assets\Scripts\Menu\MainMenu.cs" />
-    <Compile Include="Assets\Scripts\Menu\MenuManager.cs" />
-    <Compile Include="Assets\Scripts\Menu\MenuName.cs" />
+    <Compile Include="Assets\Scripts\Menu\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Util\EffectUtils.cs" />
     <Compile Include="Assets\Scripts\Util\GameInitializer.cs" />
     <Compile Include="Assets\Scripts\Util\RandomNumberGenerator.cs" />
