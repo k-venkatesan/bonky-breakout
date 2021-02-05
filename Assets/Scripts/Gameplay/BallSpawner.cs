@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class BallSpawner : MonoBehaviour
 {
@@ -21,12 +22,24 @@ public class BallSpawner : MonoBehaviour
     // Flag that instructs whether to spawn ball or not
     private bool isBallToBeSpawned = false;
 
+    // Ball removal event
+    private BallRemoved ballRemoved;
+
     #endregion // Fields
 
     #region Properties
     #endregion // Properties
 
     #region Methods
+
+    /// <summary>
+    /// Adds listener for ball removal event
+    /// </summary>
+    /// <param name="listener"></param>
+    public void AddBallRemovalListener(UnityAction listener)
+    {
+        ballRemoved.AddListener(listener);
+    }
 
     /// <summary>
     /// Calculates bottom-left and top-right points of square area where balls spawn
@@ -38,6 +51,15 @@ public class BallSpawner : MonoBehaviour
         ballSpawnLocationBottomLeftCorner.y = ballCollider.transform.position.y - ballCollider.radius;
         ballSpawnLocationTopRightCorner.x = ballCollider.transform.position.x + ballCollider.radius;
         ballSpawnLocationTopRightCorner.y = ballCollider.transform.position.y + ballCollider.radius;
+    }
+
+    /// <summary>
+    /// Initializes events pertaining to ball spawner
+    /// </summary>
+    private void InitializeEvents()
+    {
+        ballRemoved = new BallRemoved();
+        EventManager.AddBallRemovedInvoker(this);
     }
 
     /// <summary>
@@ -103,7 +125,7 @@ public class BallSpawner : MonoBehaviour
     private void SpawnNewBall()
     {
         Instantiate(prefabBall);
-        HUD.DecreaseBallsLeftByOne();
+        ballRemoved.Invoke();
     }
 
     /// <summary>
@@ -123,7 +145,8 @@ public class BallSpawner : MonoBehaviour
 
     private void Awake()
     {
-        VerifySerializedFields();        
+        VerifySerializedFields();
+        InitializeEvents();
     }
 
     private void Start()

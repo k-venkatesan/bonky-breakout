@@ -16,6 +16,10 @@ public static class EventManager
     private static Block pointsAddedInvoker;
     private static UnityAction<int> pointsAddedListener;
 
+    // Invoker and listener for ball removal event
+    private static BallSpawner ballRemovedInvoker;
+    private static UnityAction ballRemovedListener;
+
     #endregion // Fields
 
     #region // Properties
@@ -69,7 +73,7 @@ public static class EventManager
     /// <summary>
     /// Adds invoker of points addition event
     /// </summary>
-    /// <param name="invoker">Invoker of points addition</param>
+    /// <param name="invoker">Invoker of points addition event</param>
     public static void AddPointsAddedInvoker(Block invoker)
     {
         pointsAddedInvoker = invoker;
@@ -88,7 +92,33 @@ public static class EventManager
         pointsAddedListener = listener;
         if (pointsAddedInvoker != null)
         {
-            pointsAddedInvoker.AddPointsAdditionListener(listener);
+            pointsAddedInvoker.AddPointsAdditionListener(pointsAddedListener);
+        }
+    }
+
+    /// <summary>
+    /// Adds invoker of ball removal event
+    /// </summary>
+    /// <param name="invoker">Invoker of ball removal event</param>
+    public static void AddBallRemovedInvoker(BallSpawner invoker)
+    {
+        ballRemovedInvoker = invoker;
+        if (ballRemovedListener != null)
+        {
+            ballRemovedInvoker.AddBallRemovalListener(ballRemovedListener);
+        }
+    }
+
+    /// <summary>
+    /// Adds listener for ball removal event
+    /// </summary>
+    /// <param name="listener">Listener for ball removal event</param>
+    public static void AddBallRemovedListener(UnityAction listener)
+    {
+        ballRemovedListener = listener;
+        if (ballRemovedInvoker != null)
+        {
+            ballRemovedInvoker.AddBallRemovalListener(ballRemovedListener);
         }
     }
 

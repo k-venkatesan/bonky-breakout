@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Configuration\ConfigurationData.cs" />
     <Compile Include="Assets\Scripts\Configuration\ConfigurationUtils.cs" />
+    <Compile Include="Assets\Scripts\Events\BallRemoved.cs" />
     <Compile Include="Assets\Scripts\Events\EventManager.cs" />
     <Compile Include="Assets\Scripts\Events\FreezerEffectActivated.cs" />
     <Compile Include="Assets\Scripts\Events\PointsAdded.cs" />

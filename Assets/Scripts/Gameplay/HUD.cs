@@ -43,12 +43,13 @@ public class HUD : MonoBehaviour
     private void AddEventListeners()
     {
         EventManager.AddPointsAddedListener(IncreaseScore);
+        EventManager.AddBallRemovedListener(DecreaseBallsLeftByOne);
     }
 
     /// <summary>
     /// Decreases number of balls left and updates display
     /// </summary>
-    public static void DecreaseBallsLeftByOne()
+    private void DecreaseBallsLeftByOne()
     {
         ballsLeft -= 1;
         ballsLeftText.text = BallsLeftTextContents;
