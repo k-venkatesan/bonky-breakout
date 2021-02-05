@@ -12,6 +12,10 @@ public static class EventManager
     private static UnityAction<float> freezerEffectListener;
     private static UnityAction<float, float> speedupEffectListener;
 
+    // Invoker and listener for points addition event
+    private static Block pointsAddedInvoker;
+    private static UnityAction<int> pointsAddedListener;
+
     #endregion // Fields
 
     #region // Properties
@@ -59,6 +63,32 @@ public static class EventManager
         if (pickupEffectInvoker != null)
         {
             pickupEffectInvoker.AddSpeedupEffectListener(speedupEffectListener);
+        }
+    }
+
+    /// <summary>
+    /// Adds invoker of points addition event
+    /// </summary>
+    /// <param name="invoker">Invoker of points addition</param>
+    public static void AddPointsAddedInvoker(Block invoker)
+    {
+        pointsAddedInvoker = invoker;
+        if (pointsAddedListener != null)
+        {
+            pointsAddedInvoker.AddPointsAdditionListener(pointsAddedListener);
+        }
+    }
+
+    /// <summary>
+    /// Adds listener for points addition event
+    /// </summary>
+    /// <param name="listener">Listener for points addition event</param>
+    public static void AddPointsAddedListener(UnityAction<int> listener)
+    {
+        pointsAddedListener = listener;
+        if (pointsAddedInvoker != null)
+        {
+            pointsAddedInvoker.AddPointsAdditionListener(listener);
         }
     }
 

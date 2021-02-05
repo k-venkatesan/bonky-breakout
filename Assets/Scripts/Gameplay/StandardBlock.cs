@@ -54,8 +54,10 @@ public class StandardBlock : Block
         VerifySerializedFields();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         ApplyRandomSprite();
         AssignPointsValue();
     }

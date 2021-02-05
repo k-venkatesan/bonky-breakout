@@ -1,5 +1,6 @@
 ﻿using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Block that player attempts to break
@@ -11,12 +12,33 @@ public class Block : MonoBehaviour
     // Points added to score when block is broken
     protected int pointsWorth;
 
+    // Points addition event
+    private PointsAdded pointsAdded;
+
     #endregion // Fields
 
     #region Components
     #endregion // Components
 
     #region Methods
+
+    /// <summary>
+    /// Addes listener for points addition event
+    /// </summary>
+    /// <param name="listener">Listener for points addition event</param>
+    public void AddPointsAdditionListener(UnityAction<int> listener)
+    {
+        pointsAdded?.AddListener(listener);
+    }
+
+    /// <summary>
+    /// Initializes events pertaining to block
+    /// </summary>
+    private void InitializeEvents()
+    {
+        pointsAdded = new PointsAdded();
+        EventManager.AddPointsAddedInvoker(this);
+    }
 
     /// <summary>
     /// Checks for ball collisions with block and breaks block if so
@@ -28,7 +50,7 @@ public class Block : MonoBehaviour
         if (collision.gameObject.CompareTag(TagManager.Ball))
         {
             // Add points before destroying block
-            HUD.IncreaseScore(pointsWorth);
+            pointsAdded.Invoke(pointsWorth);
             Destroy(gameObject);
         }
     }
@@ -36,6 +58,11 @@ public class Block : MonoBehaviour
     #endregion // Methods
 
     #region MonoBehaviour Messages
+
+    protected virtual void Start()
+    {
+        InitializeEvents();
+    }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {

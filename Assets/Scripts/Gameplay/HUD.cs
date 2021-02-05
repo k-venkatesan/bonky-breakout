@@ -38,6 +38,14 @@ public class HUD : MonoBehaviour
     #region Methods
 
     /// <summary>
+    /// Adds listeners for events pertaining to HUD
+    /// </summary>
+    private void AddEventListeners()
+    {
+        EventManager.AddPointsAddedListener(IncreaseScore);
+    }
+
+    /// <summary>
     /// Decreases number of balls left and updates display
     /// </summary>
     public static void DecreaseBallsLeftByOne()
@@ -50,7 +58,7 @@ public class HUD : MonoBehaviour
     /// Increases score by given points and updates display
     /// </summary>
     /// <param name="pointsToIncreaseScoreBy">Points to increase total score by</param>
-    public static void IncreaseScore(int pointsToIncreaseScoreBy)
+    private void IncreaseScore(int pointsToIncreaseScoreBy)
     {
         score += pointsToIncreaseScoreBy;
         scoreText.text = ScoreTextContents;
@@ -79,6 +87,7 @@ public class HUD : MonoBehaviour
     private void Start()
     {
         InitializeTexts();
+        AddEventListeners();
     }
 
     #endregion MonoBehaviour Messages
