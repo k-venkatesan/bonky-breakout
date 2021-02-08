@@ -90,19 +90,10 @@ public class Paddle : MonoBehaviour
     {
         rb2D = GetComponent<Rigidbody2D>();
         colliderHalfWidth = GetComponent<BoxCollider2D>().size[0] / 2;
-        freezeTimer = gameObject.AddComponent<Timer>();
         isFrozen = false;
-    }
 
-    /// <summary>
-    /// Monitors freeze status of paddle and updates it when freeze timer finishes
-    /// </summary>
-    private void MonitorFreezeStatus()
-    {
-        if (isFrozen && freezeTimer.Finished)
-        {
-            isFrozen = false;
-        }
+        freezeTimer = gameObject.AddComponent<Timer>();
+        freezeTimer.AddTimerCompletionListener(UnfreezePaddle);
     }
 
     /// <summary>
@@ -170,6 +161,17 @@ public class Paddle : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Unfreezes frozen paddle
+    /// </summary>
+    private void UnfreezePaddle()
+    {
+        if (isFrozen)
+        {
+            isFrozen = false;
+        }
+    }
+
     #endregion // Methods
 
     #region MonoBehaviour Messages
@@ -178,11 +180,6 @@ public class Paddle : MonoBehaviour
     {
         InitializeFields();
         AddFreezerEffectListener();
-    }
-
-    private void Update()
-    {
-        MonitorFreezeStatus();
     }
 
     private void FixedUpdate()

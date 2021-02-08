@@ -54,6 +54,23 @@ public class BallSpawner : MonoBehaviour
     }
 
     /// <summary>
+    /// Checks if new ball is required and spawns one if so
+    /// </summary>
+    private void CheckIfNewBallIsRequired()
+    {
+        // Check if that there is no object already present in spawn location
+        if (Physics2D.OverlapArea(ballSpawnLocationBottomLeftCorner, ballSpawnLocationTopRightCorner) == null)
+        {
+            // Spawn ball
+            SpawnNewBall();
+
+            // Reset timer
+            randomSpawnTimer.Duration = RandomNumberGenerator.RandomNumberInRange(ConfigurationUtils.RandomBallSpawnMinDurationInSeconds, ConfigurationUtils.RandomBallSpawnMaxDurationInSeconds);
+            randomSpawnTimer.Run();
+        }
+    }
+
+    /// <summary>
     /// Initializes events pertaining to ball spawner
     /// </summary>
     private void InitializeEvents()
@@ -70,29 +87,13 @@ public class BallSpawner : MonoBehaviour
         // Initialize wait timer
         waitTimer = gameObject.AddComponent<Timer>();
         waitTimer.Duration = ConfigurationUtils.BallSpawnWaitDurationInSeconds;
+        waitTimer.AddTimerCompletionListener(ProcessSpawnFlag);
 
         // Initialize random spawn timer
         randomSpawnTimer = gameObject.AddComponent<Timer>();
         randomSpawnTimer.Duration = RandomNumberGenerator.RandomNumberInRange(ConfigurationUtils.RandomBallSpawnMinDurationInSeconds, ConfigurationUtils.RandomBallSpawnMaxDurationInSeconds);
         randomSpawnTimer.Run();
-    }
-
-    /// <summary>
-    /// Monitors timer that controls random spawning of balls
-    /// </summary>
-    private void MonitorRandomSpawnTimer()
-    {
-        // Check if timer has finished and that there is no object already present in spawn location
-        if (randomSpawnTimer.Finished 
-            && Physics2D.OverlapArea(ballSpawnLocationBottomLeftCorner, ballSpawnLocationTopRightCorner) == null)
-        {
-            // Spawn ball
-            SpawnNewBall();
-
-            // Reset timer
-            randomSpawnTimer.Duration = RandomNumberGenerator.RandomNumberInRange(ConfigurationUtils.RandomBallSpawnMinDurationInSeconds, ConfigurationUtils.RandomBallSpawnMaxDurationInSeconds);
-            randomSpawnTimer.Run();
-        }
+        randomSpawnTimer.AddTimerCompletionListener(CheckIfNewBallIsRequired);
     }
 
     /// <summary>
@@ -100,9 +101,8 @@ public class BallSpawner : MonoBehaviour
     /// </summary>
     private void ProcessSpawnFlag()
     {
-        // Check if a ball is to be spawned, the wait timer has finished, and that there is no object already present in spawn location
+        // Check if a ball is to be spawned and that there is no object already present in spawn location
         if (isBallToBeSpawned 
-            && waitTimer.Finished 
             && Physics2D.OverlapArea(ballSpawnLocationBottomLeftCorner, ballSpawnLocationTopRightCorner) == null)
         {
             SpawnNewBall();
@@ -154,12 +154,6 @@ public class BallSpawner : MonoBehaviour
         InitializeTimers();
         CalculateBallSpawnLocationCorners();
         RequestNewBall();
-    }
-
-    private void Update()
-    {
-        MonitorRandomSpawnTimer();
-        ProcessSpawnFlag();
     }
 
     #endregion // MonoBehaviour Messages

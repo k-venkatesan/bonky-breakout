@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Events\FreezerEffectActivated.cs" />
     <Compile Include="Assets\Scripts\Events\PointsAdded.cs" />
     <Compile Include="Assets\Scripts\Events\SpeedupEffectActivated.cs" />
+    <Compile Include="Assets\Scripts\Events\TimerFinished.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Ball.cs" />
     <Compile Include="Assets\Scripts\Gameplay\BallSpawner.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Block.cs" />

@@ -81,6 +81,7 @@ public class Ball : MonoBehaviour
     {
         rb2D = GetComponent<Rigidbody2D>();
         lifeTimer = GetComponent<Timer>();
+        lifeTimer.AddTimerCompletionListener(ReplaceBall);
     }
 
     /// <summary>
@@ -94,6 +95,15 @@ public class Ball : MonoBehaviour
             Camera.main.GetComponent<BallSpawner>().RequestNewBall();
             Destroy(gameObject);
         }
+    }
+
+    /// <summary>
+    /// Destroys ball and spawns a new one
+    /// </summary>
+    private void ReplaceBall()
+    {
+        Camera.main.GetComponent<BallSpawner>().RequestNewBall();
+        Destroy(gameObject);
     }
 
     /// <summary>
@@ -132,7 +142,7 @@ public class Ball : MonoBehaviour
         lifeTimer.Run();
     }
 
-    /// <summary>
+/*    /// <summary>
     /// Checks if the eclipsed lifetime has surpassed the total lifetime.
     /// Destroys the ball and spawns a new one if so.
     /// </summary>
@@ -143,7 +153,7 @@ public class Ball : MonoBehaviour
             Camera.main.GetComponent<BallSpawner>().RequestNewBall();
             Destroy(gameObject);
         }
-    }
+    }*/
 
     /// <summary>
     /// Updates speedup effect of ball in accordance with global effect status
@@ -193,7 +203,7 @@ public class Ball : MonoBehaviour
 
     private void Update()
     {
-        UpdateLifeStatus();
+        //UpdateLifeStatus();
         UpdateSpeedupEffect();        
     }
 
