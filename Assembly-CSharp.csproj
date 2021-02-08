@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Events\BallRemoved.cs" />
     <Compile Include="Assets\Scripts\Events\EventManager.cs" />
     <Compile Include="Assets\Scripts\Events\FreezerEffectActivated.cs" />
+    <Compile Include="Assets\Scripts\Events\LastBallUsed.cs" />
     <Compile Include="Assets\Scripts\Events\PointsAdded.cs" />
     <Compile Include="Assets\Scripts\Events\SpeedupEffectActivated.cs" />
     <Compile Include="Assets\Scripts\Events\TimerFinished.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Assets\Scripts\Gameplay\SpeedupEffectMonitor.cs" />
     <Compile Include="Assets\Scripts\Gameplay\StandardBlock.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Timer.cs" />
+    <Compile Include="Assets\Scripts\Menu\GameOverCanvas.cs" />
     <Compile Include="Assets\Scripts\Menu\HelpCanvas.cs" />
     <Compile Include="Assets\Scripts\Menu\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Menu\PauseMenu.cs" />

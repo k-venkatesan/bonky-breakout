@@ -24,6 +24,10 @@ public static class EventManager
     private static Ball ballDisappearedInvoker;
     private static UnityAction ballDisappearedListener;
 
+    // Invoker and listener for last ball usage event
+    private static HUD lastBallUsedInvoker;
+    private static UnityAction lastBallUsedListener;
+
     #endregion // Fields
 
     #region // Properties
@@ -149,6 +153,32 @@ public static class EventManager
         if (ballDisappearedInvoker != null)
         {
             ballDisappearedInvoker.AddBallDisappearanceListener(ballDisappearedListener);
+        }
+    }
+
+    /// <summary>
+    /// Adds invoker of last ball usage event
+    /// </summary>
+    /// <param name="invoker">Invoker of last ball usage event</param>
+    public static void AddLastBallUsageInvoker(HUD invoker)
+    {
+        lastBallUsedInvoker = invoker;
+        if (lastBallUsedListener != null)
+        {
+            lastBallUsedInvoker.AddLastBallUsageListener(lastBallUsedListener);
+        }
+    }
+
+    /// <summary>
+    /// Adds listener for last ball usage event
+    /// </summary>
+    /// <param name="listener">Listener for last ball usage event</param>
+    public static void AddLastBallUsageListener(UnityAction listener)
+    {
+        lastBallUsedListener = listener;
+        if (lastBallUsedInvoker != null)
+        {
+            lastBallUsedInvoker.AddLastBallUsageListener(lastBallUsedListener);
         }
     }
 

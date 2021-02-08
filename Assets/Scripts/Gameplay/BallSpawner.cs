@@ -121,7 +121,7 @@ public class BallSpawner : MonoBehaviour
     /// <summary>
     /// Requests a ball that gets spawned after a wait duration set in configuration file
     /// </summary>
-    public void RequestNewBall()
+    private void RequestNewBall()
     {
         isBallToBeSpawned = true;
         waitTimer.Run();
