@@ -28,6 +28,10 @@ public static class EventManager
     private static HUD lastBallUsedInvoker;
     private static UnityAction lastBallUsedListener;
 
+    // Invoker and listener for block  event
+    private static Block blockBrokenInvoker;
+    private static UnityAction blockBrokenListener;
+
     #endregion // Fields
 
     #region // Properties
@@ -179,6 +183,32 @@ public static class EventManager
         if (lastBallUsedInvoker != null)
         {
             lastBallUsedInvoker.AddLastBallUsageListener(lastBallUsedListener);
+        }
+    }
+
+    /// <summary>
+    /// Adds invoker of block breaking event
+    /// </summary>
+    /// <param name="invoker">Invoker of block breaking event</param>
+    public static void AddBlockBreakingInvoker(Block invoker)
+    {
+        blockBrokenInvoker = invoker;
+        if (blockBrokenListener != null)
+        {
+            blockBrokenInvoker.AddBlockBreakingListener(blockBrokenListener);
+        }
+    }
+
+    /// <summary>
+    /// Adds listener for block breaking event
+    /// </summary>
+    /// <param name="listener">Listener for block breaking event</param>
+    public static void AddBlockBreakingListener(UnityAction listener)
+    {
+        blockBrokenListener = listener;
+        if (blockBrokenInvoker != null)
+        {
+            blockBrokenInvoker.AddBlockBreakingListener(blockBrokenListener);
         }
     }
 

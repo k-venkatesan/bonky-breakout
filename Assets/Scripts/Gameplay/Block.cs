@@ -12,6 +12,9 @@ public class Block : MonoBehaviour
     // Points added to score when block is broken
     protected int pointsWorth;
 
+    // Block breaking event
+    private BlockBroken blockBroken;
+
     // Points addition event
     private PointsAdded pointsAdded;
 
@@ -23,7 +26,16 @@ public class Block : MonoBehaviour
     #region Methods
 
     /// <summary>
-    /// Addes listener for points addition event
+    /// Adds listener for block breaking event
+    /// </summary>
+    /// <param name="listener">Listener for block breaking event</param>
+    public void AddBlockBreakingListener(UnityAction listener)
+    {
+        blockBroken.AddListener(listener);
+    }
+
+    /// <summary>
+    /// Adds listener for points addition event
     /// </summary>
     /// <param name="listener">Listener for points addition event</param>
     public void AddPointsAdditionListener(UnityAction<int> listener)
@@ -36,6 +48,9 @@ public class Block : MonoBehaviour
     /// </summary>
     private void InitializeEvents()
     {
+        blockBroken = new BlockBroken();
+        EventManager.AddBlockBreakingInvoker(this);
+
         pointsAdded = new PointsAdded();
         EventManager.AddPointsAddedInvoker(this);
     }
@@ -50,6 +65,7 @@ public class Block : MonoBehaviour
         if (collision.gameObject.CompareTag(TagManager.Ball))
         {
             // Add points before destroying block
+            blockBroken.Invoke();
             pointsAdded.Invoke(pointsWorth);
             Destroy(gameObject);
         }

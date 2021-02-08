@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Configuration\ConfigurationUtils.cs" />
     <Compile Include="Assets\Scripts\Events\BallDisappeared.cs" />
     <Compile Include="Assets\Scripts\Events\BallRemoved.cs" />
+    <Compile Include="Assets\Scripts\Events\BlockBroken.cs" />
     <Compile Include="Assets\Scripts\Events\EventManager.cs" />
     <Compile Include="Assets\Scripts\Events\FreezerEffectActivated.cs" />
     <Compile Include="Assets\Scripts\Events\LastBallUsed.cs" />
@@ -90,7 +91,7 @@
     <Compile Include="Assets\Scripts\Menu\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Menu\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Util\EffectUtils.cs" />
-    <Compile Include="Assets\Scripts\Util\GameInitializer.cs" />
+    <Compile Include="Assets\Scripts\Util\GameController.cs" />
     <Compile Include="Assets\Scripts\Util\RandomNumberGenerator.cs" />
     <Compile Include="Assets\Scripts\Util\ScreenUtils.cs" />
     <Compile Include="Assets\Scripts\Util\TagManager.cs" />

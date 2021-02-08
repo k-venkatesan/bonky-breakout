@@ -3,7 +3,7 @@
 /// <summary>
 /// Initializes and monitors the game
 /// </summary>
-public class GameInitializer : MonoBehaviour 
+public class GameController : MonoBehaviour 
 {
     #region Fields
     #endregion // Fields
@@ -14,10 +14,11 @@ public class GameInitializer : MonoBehaviour
     #region Methods
     
     /// <summary>
-    /// Adds listener for last ball used eve
+    /// Adds listeners events
     /// </summary>
-    private void AddLastBallUsedListener()
+    private void AddEventListeners()
     {
+        EventManager.AddBlockBreakingListener(HandleBlockBreaking);
         EventManager.AddLastBallUsageListener(EndGame);
     }
 
@@ -55,6 +56,17 @@ public class GameInitializer : MonoBehaviour
         enabled = false;
     }
 
+    /// <summary>
+    /// Ends game when last block is broken
+    /// </summary>
+    private void HandleBlockBreaking()
+    {
+        if (FindObjectsOfType<Block>().Length == 1)
+        {
+            EndGame();
+        }
+    }
+
     #endregion // Methods
 
     #region MonoBehaviour Messages
@@ -69,7 +81,7 @@ public class GameInitializer : MonoBehaviour
 
     private void Start()
     {
-        AddLastBallUsedListener();
+        AddEventListeners();
     }
 
     private void Update()
