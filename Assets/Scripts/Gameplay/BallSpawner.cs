@@ -35,10 +35,18 @@ public class BallSpawner : MonoBehaviour
     /// <summary>
     /// Adds listener for ball removal event
     /// </summary>
-    /// <param name="listener"></param>
+    /// <param name="listener">Listener for ball removal event</param>
     public void AddBallRemovalListener(UnityAction listener)
     {
         ballRemoved.AddListener(listener);
+    }
+
+    /// <summary>
+    /// Adds listener for ball disappearance event
+    /// </summary>
+    private void AddBallDisappearedListener()
+    {
+        EventManager.AddBallDisappearedListener(RequestNewBall);
     }
 
     /// <summary>
@@ -153,6 +161,7 @@ public class BallSpawner : MonoBehaviour
     {
         InitializeTimers();
         CalculateBallSpawnLocationCorners();
+        AddBallDisappearedListener();
         RequestNewBall();
     }
 

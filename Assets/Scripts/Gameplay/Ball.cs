@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Ball that rebounds off surfaces
@@ -27,6 +28,9 @@ public class Ball : MonoBehaviour
     private bool isSpeedAdjustmentRequired = false;
     private bool isSpeedupEffectActive = false;
 
+    // Ball disappearance event
+    private BallDisappeared ballDisappeared;
+
     #endregion // Fields
 
     #region Components
@@ -39,6 +43,15 @@ public class Ball : MonoBehaviour
     #endregion // Components
 
     #region Methods
+
+    /// <summary>
+    /// Adds listener for ball disappearance event
+    /// </summary>
+    /// <param name="listener">Listener for ball disappearance event</param>
+    public void AddBallDisappearanceListener(UnityAction listener)
+    {
+        ballDisappeared.AddListener(listener);
+    }
 
     /// <summary>
     /// Adds listener to speedup effect activation event
@@ -75,6 +88,15 @@ public class Ball : MonoBehaviour
     }
 
     /// <summary>
+    /// Initializes events pertaining to ball
+    /// </summary>
+    private void InitializeEvents()
+    {
+        ballDisappeared = new BallDisappeared();
+        EventManager.AddBallDisappearedInvoker(this);
+    }
+
+    /// <summary>
     /// Initializes fields with values and references
     /// </summary>
     private void InitializeFields()
@@ -86,23 +108,23 @@ public class Ball : MonoBehaviour
 
     /// <summary>
     /// Checks if reason for ball disappearance is because it has fallen below bottom edge of screen.
-    /// Destroys the ball and spawns a new one if so.
+    /// Destroys the ball and invokes associated event if so
     /// </summary>
     private void ProcessDisappearance()
     {
         if (transform.position.y < ScreenUtils.ScreenBottom)
         {
-            Camera.main.GetComponent<BallSpawner>().RequestNewBall();
+            ballDisappeared.Invoke();
             Destroy(gameObject);
         }
     }
 
     /// <summary>
-    /// Destroys ball and spawns a new one
+    /// Destroys ball and invokes associated event
     /// </summary>
     private void ReplaceBall()
     {
-        Camera.main.GetComponent<BallSpawner>().RequestNewBall();
+        ballDisappeared.Invoke();
         Destroy(gameObject);
     }
 
@@ -141,19 +163,6 @@ public class Ball : MonoBehaviour
         lifeTimer.Duration = ConfigurationUtils.BallLifetimeInSeconds;
         lifeTimer.Run();
     }
-
-/*    /// <summary>
-    /// Checks if the eclipsed lifetime has surpassed the total lifetime.
-    /// Destroys the ball and spawns a new one if so.
-    /// </summary>
-    private void UpdateLifeStatus()
-    {
-        if (lifeTimer.Finished)
-        {
-            Camera.main.GetComponent<BallSpawner>().RequestNewBall();
-            Destroy(gameObject);
-        }
-    }*/
 
     /// <summary>
     /// Updates speedup effect of ball in accordance with global effect status
@@ -194,6 +203,11 @@ public class Ball : MonoBehaviour
 
     #region MonoBehaviour Messages
 
+    private void Awake()
+    {
+        InitializeEvents();
+    }
+
     private void Start()
     {
         InitializeFields();
@@ -203,7 +217,6 @@ public class Ball : MonoBehaviour
 
     private void Update()
     {
-        //UpdateLifeStatus();
         UpdateSpeedupEffect();        
     }
 

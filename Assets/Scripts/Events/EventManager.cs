@@ -20,6 +20,10 @@ public static class EventManager
     private static BallSpawner ballRemovedInvoker;
     private static UnityAction ballRemovedListener;
 
+    // Invoker and listener for ball disappearance event
+    private static Ball ballDisappearedInvoker;
+    private static UnityAction ballDisappearedListener;
+
     #endregion // Fields
 
     #region // Properties
@@ -119,6 +123,32 @@ public static class EventManager
         if (ballRemovedInvoker != null)
         {
             ballRemovedInvoker.AddBallRemovalListener(ballRemovedListener);
+        }
+    }
+
+    /// <summary>
+    /// Adds invoker of ball disappearance event
+    /// </summary>
+    /// <param name="invoker">Invoker of ball disappearance event</param>
+    public static void AddBallDisappearedInvoker(Ball invoker)
+    {
+        ballDisappearedInvoker = invoker;
+        if (ballDisappearedListener != null)
+        {
+            ballDisappearedInvoker.AddBallDisappearanceListener(ballDisappearedListener);
+        }
+    }
+
+    /// <summary>
+    /// Adds listener for ball disappearance event
+    /// </summary>
+    /// <param name="listener">Listener for ball disappearance event</param>
+    public static void AddBallDisappearedListener(UnityAction listener)
+    {
+        ballDisappearedListener = listener;
+        if (ballDisappearedInvoker != null)
+        {
+            ballDisappearedInvoker.AddBallDisappearanceListener(ballDisappearedListener);
         }
     }
 
