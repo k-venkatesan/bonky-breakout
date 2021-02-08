@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// A timer
@@ -16,6 +17,9 @@ public class Timer : MonoBehaviour
 	
 	// Support for Finished property
 	bool started = false;
+
+	// Timer completion event
+	TimerFinished timerFinished;
 
     #endregion // Fields
 
@@ -38,16 +42,6 @@ public class Timer : MonoBehaviour
 	}
 	
 	/// <summary>
-	/// Gets whether or not the timer has finished running
-	/// This property returns false if the timer has never been started
-	/// </summary>
-	/// <value>true if finished; otherwise, false.</value>
-	public bool Finished
-    {
-		get { return started && !running; } 
-	}
-	
-	/// <summary>
 	/// Gets whether or not the timer is currently running
 	/// </summary>
 	/// <value>true if running; otherwise, false.</value>
@@ -61,6 +55,15 @@ public class Timer : MonoBehaviour
 	#region Methods
 
 	/// <summary>
+	/// Add listener for timer completion
+	/// </summary>
+	/// <param name="listener"></param>
+	public void AddTimerCompletionListener(UnityAction listener)
+    {
+		timerFinished.AddListener(listener);
+    }
+
+	/// <summary>
 	/// Adds time on top of existing duration
 	/// </summary>
 	/// <param name="seconds">Number of seconds to add onto timer</param>
@@ -68,6 +71,14 @@ public class Timer : MonoBehaviour
     {
 		totalSeconds += seconds;
     }
+
+	/// <summary>
+	/// Initializes events pertaining to the timer
+	/// </summary>
+	private void InitializeEvents()
+    {
+		timerFinished = new TimerFinished();
+	}
 
 	/// <summary>
 	/// Runs the timer.
@@ -98,15 +109,21 @@ public class Timer : MonoBehaviour
 			if (elapsedSeconds >= totalSeconds)
 			{
 				running = false;
+				timerFinished.Invoke();
 			}
 		}
 	}
 
-	#endregion // Methods
+    #endregion // Methods
 
-	#region MonoBehaviour Messages
+    #region MonoBehaviour Messages
 
-	private void Update()
+    private void Awake()
+    {
+		InitializeEvents();
+    }
+
+    private void Update()
     {
 		UpdateStatus();		
 	}

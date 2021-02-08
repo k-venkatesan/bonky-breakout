@@ -65,9 +65,15 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Configuration\ConfigurationData.cs" />
     <Compile Include="Assets\Scripts\Configuration\ConfigurationUtils.cs" />
+    <Compile Include="Assets\Scripts\Events\BallDisappeared.cs" />
+    <Compile Include="Assets\Scripts\Events\BallRemoved.cs" />
+    <Compile Include="Assets\Scripts\Events\BlockBroken.cs" />
     <Compile Include="Assets\Scripts\Events\EventManager.cs" />
     <Compile Include="Assets\Scripts\Events\FreezerEffectActivated.cs" />
+    <Compile Include="Assets\Scripts\Events\LastBallUsed.cs" />
+    <Compile Include="Assets\Scripts\Events\PointsAdded.cs" />
     <Compile Include="Assets\Scripts\Events\SpeedupEffectActivated.cs" />
+    <Compile Include="Assets\Scripts\Events\TimerFinished.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Ball.cs" />
     <Compile Include="Assets\Scripts\Gameplay\BallSpawner.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Block.cs" />
@@ -80,11 +86,12 @@
     <Compile Include="Assets\Scripts\Gameplay\SpeedupEffectMonitor.cs" />
     <Compile Include="Assets\Scripts\Gameplay\StandardBlock.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Timer.cs" />
+    <Compile Include="Assets\Scripts\Menu\GameOverCanvas.cs" />
     <Compile Include="Assets\Scripts\Menu\HelpCanvas.cs" />
     <Compile Include="Assets\Scripts\Menu\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Menu\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Util\EffectUtils.cs" />
-    <Compile Include="Assets\Scripts\Util\GameInitializer.cs" />
+    <Compile Include="Assets\Scripts\Util\GameController.cs" />
     <Compile Include="Assets\Scripts\Util\RandomNumberGenerator.cs" />
     <Compile Include="Assets\Scripts\Util\ScreenUtils.cs" />
     <Compile Include="Assets\Scripts\Util\TagManager.cs" />

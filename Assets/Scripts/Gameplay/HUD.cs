@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
@@ -13,6 +14,9 @@ public class HUD : MonoBehaviour
     private static Text scoreText;
     private static Text ballsLeftText;
 
+    // Last ball usage event
+    LastBallUsed lastBallUsed;
+
     #endregion // Fields
 
     #region Properties
@@ -20,7 +24,7 @@ public class HUD : MonoBehaviour
     /// <summary>
     /// Contents of text object displaying score
     /// </summary>
-    private static string ScoreTextContents
+    public static string ScoreTextContents
     {
         get { return "Score: " + score.ToString(); }
     }
@@ -38,22 +42,56 @@ public class HUD : MonoBehaviour
     #region Methods
 
     /// <summary>
+    /// Adds listeners for events pertaining to HUD
+    /// </summary>
+    private void AddEventListeners()
+    {
+        EventManager.AddPointsAddedListener(IncreaseScore);
+        EventManager.AddBallRemovedListener(DecreaseBallsLeftByOne);
+    }
+
+    /// <summary>
+    /// Adds listener for last ball usage event
+    /// </summary>
+    public void AddLastBallUsageListener(UnityAction listener)
+    {
+        lastBallUsed.AddListener(listener);
+    }
+
+    /// <summary>
     /// Decreases number of balls left and updates display
     /// </summary>
-    public static void DecreaseBallsLeftByOne()
+    private void DecreaseBallsLeftByOne()
     {
         ballsLeft -= 1;
-        ballsLeftText.text = BallsLeftTextContents;
+
+        if (ballsLeft < 0)
+        {
+            lastBallUsed.Invoke();
+        }
+        else
+        {
+            ballsLeftText.text = BallsLeftTextContents;
+        }
     }
 
     /// <summary>
     /// Increases score by given points and updates display
     /// </summary>
     /// <param name="pointsToIncreaseScoreBy">Points to increase total score by</param>
-    public static void IncreaseScore(int pointsToIncreaseScoreBy)
+    private void IncreaseScore(int pointsToIncreaseScoreBy)
     {
         score += pointsToIncreaseScoreBy;
         scoreText.text = ScoreTextContents;
+    }
+
+    /// <summary>
+    /// Initializes events pertaining to HUD
+    /// </summary>
+    private void InitializeEvents()
+    {
+        lastBallUsed = new LastBallUsed();
+        EventManager.AddLastBallUsageInvoker(this);
     }
 
     /// <summary>
@@ -76,9 +114,15 @@ public class HUD : MonoBehaviour
 
     #region MonoBehaviour Messages
 
+    private void Awake()
+    {
+        InitializeEvents();
+    }
+
     private void Start()
     {
         InitializeTexts();
+        AddEventListeners();
     }
 
     #endregion MonoBehaviour Messages

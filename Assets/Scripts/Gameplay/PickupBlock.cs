@@ -134,8 +134,10 @@ public class PickupBlock : Block
         VerifySerializedFields();
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         AssignPointsValue();
         ApplyPickupEffectFeatures();
     }
